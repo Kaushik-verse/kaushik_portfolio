@@ -4,28 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chunduri Kaushik | Portfolio Exhibition</title>
-    
-    <!-- TailWind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    
-    <!-- Three.js (WebGL Fluid background) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    screens: {
-                        'xs': '375px',
-                    },
+                    screens: { 'xs': '375px' },
                     colors: {
                         black: '#000000',
                         white: '#ffffff',
+                        orange: {
+                            glow: '#ff6b2b',
+                            soft: '#c8511a',
+                            dim: '#7a3010',
+                            trace: '#3d1a08'
+                        },
                         neutral: {
                             950: '#030303',
                             900: '#0a0a0a',
@@ -39,10 +37,7 @@
                     fontFamily: {
                         heading: ['Syne', 'sans-serif'],
                         body: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        cursive: ['"Caveat"', 'cursive'] 
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        cursive: ['"Caveat"', 'cursive']
                     }
                 }
             }
@@ -50,13 +45,16 @@
     </script>
 
     <style>
-        /* Disable native cursor ONLY on desktop to allow custom dual-ring cursor */
-        @media (min-width: 768px) {
-            * {
-                cursor: none !important; 
-            }
+        /* Only apply custom cursor styling for devices with fine pointers */
+        @media (min-width: 768px) and (pointer: fine) { * { cursor: none !important; } }
+
+        :root {
+            --orange-glow: #ff6b2b;
+            --orange-soft: #c8511a;
+            --orange-dim: #7a3010;
+            --orange-trace: #3d1a08;
         }
-        
+
         body {
             background-color: #000000;
             color: #ffffff;
@@ -65,65 +63,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Luxury Noise Overlay */
-        #noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            content: "";
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--orange-glow); }
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1c1c1c;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ffffff;
-        }
+        ::selection { background-color: var(--orange-glow); color: #000; }
 
-        /* Letter animations */
-        .char-span {
-            display: inline-block;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .magnetic-link:hover .char-span {
-            transform: translateY(-4px);
-        }
+        .perspective-1000 { perspective: 1200px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
 
-        /* Postcard 3D perspective structure */
-        .perspective-1000 {
-            perspective: 1200px;
-        }
-        .transform-style-3d {
-            transform-style: preserve-3d;
-        }
-        .backface-hidden {
-            backface-visibility: hidden;
-        }
-        .rotate-y-180 {
-            transform: rotateY(180deg);
-        }
-
-        /* Custom selection */
-        ::selection {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        /* Active Navigation indicator line */
         .nav-link::after {
             content: '';
             position: absolute;
@@ -131,148 +82,232 @@
             height: 1px;
             bottom: -4px;
             left: 0;
-            background-color: #ffffff;
+            background: var(--orange-glow);
             transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .nav-link.active::after, .nav-link:hover::after {
-            width: 100%;
-        }
+        .nav-link.active::after, .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: var(--orange-glow) !important; }
 
-        /* CSS Grid structural design lines */
         .editorial-line {
-            background-color: rgba(255, 255, 255, 0.04);
+            background-color: rgba(255,255,255,0.03);
             pointer-events: none;
             position: fixed;
             z-index: 10;
         }
 
-        /* Audio Equalizer Bars Animation */
         @keyframes eq-play {
             0% { height: 2px; }
-            50% { height: 16px; }
+            50% { height: 14px; }
             100% { height: 2px; }
         }
-        .eq-bar {
-            transition: height 0.3s ease;
-        }
-        .eq-bar.active {
-            animation: eq-play 1.2s infinite ease-in-out;
-        }
+        .eq-bar { transition: height 0.3s ease; }
+        .eq-bar.active { animation: eq-play 1.2s infinite ease-in-out; }
         .eq-bar.active:nth-child(1) { animation-duration: 0.8s; }
         .eq-bar.active:nth-child(2) { animation-duration: 1.1s; animation-delay: 0.2s; }
         .eq-bar.active:nth-child(3) { animation-duration: 0.9s; animation-delay: 0.4s; }
         .eq-bar.active:nth-child(4) { animation-duration: 1.3s; animation-delay: 0.1s; }
         .eq-bar.active:nth-child(5) { animation-duration: 0.7s; animation-delay: 0.3s; }
+
+        .orange-border-hover {
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+        .orange-border-hover:hover {
+            border-color: var(--orange-glow) !important;
+            color: var(--orange-glow) !important;
+        }
+
+        .skill-tag {
+            transition: all 0.25s ease;
+        }
+        .skill-tag:hover {
+            background: var(--orange-glow) !important;
+            color: #000 !important;
+            border-color: var(--orange-glow) !important;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .project-card:hover {
+            border-color: var(--orange-dim) !important;
+            transform: translateY(-4px);
+        }
+        .project-card:hover .project-badge {
+            background: var(--orange-glow);
+            color: #000;
+        }
+
+        /* Hero text responsive scale constraints */
+        .hero-text {
+            font-size: clamp(1.8rem, 10vw, 7.5vw);
+        }
+        @media (min-width: 480px) {
+            .hero-text {
+                font-size: clamp(2.2rem, 11vw, 7.5vw);
+            }
+        }
+
+        .hero-text-reveal {
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-text-reveal.revealed {
+            /* Expanded bounds to fully prevent text bounding crop on wide heading letters */
+            clip-path: inset(-20px -20px -20px -20px);
+        }
+
+        /* Section reveals */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Orange glow pulse on accent elements */
+        @keyframes orangeGlow {
+            0%, 100% { box-shadow: 0 0 8px rgba(255,107,43,0.3); }
+            50% { box-shadow: 0 0 22px rgba(255,107,43,0.6); }
+        }
+        .orange-glow-pulse {
+            animation: orangeGlow 3s ease-in-out infinite;
+        }
+
+        /* Constellation canvas */
+        #constellation-canvas { cursor: pointer !important; }
+
+        /* Mobile menu */
+        #mobile-menu {
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #mobile-menu.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* Contact hover */
+        .contact-row { transition: all 0.3s ease; }
+        .contact-row:hover { border-color: var(--orange-glow) !important; }
+        .contact-row:hover .contact-label { color: var(--orange-glow); }
+        .contact-row:hover .contact-arrow { color: var(--orange-glow); opacity: 1; }
+
+        /* Scrollbar orange on Firefox */
+        * { scrollbar-width: thin; scrollbar-color: var(--orange-dim) #000; }
+
+        /* Mobile safe area */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .sound-btn { bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+        }
+
+        /* Smoother page transitions */
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="bg-black select-none">
 
-    <!-- Fluid Background Canvas -->
-    <canvas id="fluid-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none opacity-100"></canvas>
+    <!-- WebGL Fluid Background -->
+    <canvas id="fluid-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none" style="z-index:-20;opacity:1;"></canvas>
     
-    <!-- Deep Vignette to make the background moodier -->
-    <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)] -z-10"></div>
+    <!-- Vignette -->
+    <div class="fixed inset-0 pointer-events-none" style="background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.75) 100%); z-index:-10;"></div>
 
-    <!-- Grain/Noise Overlay -->
-    <div id="noise-overlay-container" class="fixed top-0 left-0 w-full h-full pointer-events-none z-[99]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.035\'/%3E%3C/svg%3E');"></div>
+    <!-- Grain overlay -->
+    <div class="fixed inset-0 pointer-events-none" style="z-index:99; background-image:url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E\");"></div>
 
-    <!-- Editorial Structural Lines (Luxury Aesthetic) -->
+    <!-- Editorial lines -->
     <div class="editorial-line w-[1px] h-full left-[8vw] top-0 hidden lg:block"></div>
     <div class="editorial-line w-[1px] h-full right-[8vw] top-0 hidden lg:block"></div>
-    <div class="editorial-line w-full h-[1px] top-[10vh] left-0 hidden lg:block"></div>
 
-    <!-- Custom Cursor elements (Hidden on Mobile) -->
-    <div id="custom-cursor-dot" class="hidden md:block fixed w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out"></div>
-    <div id="custom-cursor-ring" class="hidden md:block fixed w-8 h-8 border border-white rounded-full pointer-events-none z-[9998] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"></div>
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="hidden md:block opacity-0 fixed w-2 h-2 bg-white rounded-full pointer-events-none mix-blend-difference" style="z-index:9999; transform:translate(-50%,-50%); transition:transform 0.06s ease, opacity 0.3s ease;"></div>
+    <div id="cursor-ring" class="hidden md:block opacity-0 fixed rounded-full border pointer-events-none mix-blend-difference" style="z-index:9998; width:32px; height:32px; border-color:rgba(255,255,255,0.5); transform:translate(-50%,-50%); transition:width 0.2s ease, height 0.2s ease, background-color 0.2s ease, opacity 0.3s ease;"></div>
 
-    <!-- Dynamic Alert/Toast Area -->
-    <div id="custom-alert" class="fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-sm text-center md:w-auto z-[100] px-6 py-3 border border-white bg-black bg-opacity-95 text-white tracking-widest text-xs uppercase hidden transition-all duration-500 ease-out opacity-0 transform translate-y-[-20px]">
-        Link Copied to Clipboard
+    <!-- Toast -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] px-5 py-3 border border-[var(--orange-glow)] bg-black text-[var(--orange-glow)] tracking-widest text-[10px] uppercase hidden opacity-0 transition-all duration-500" style="transform:translateX(-50%) translateY(-20px);">
+        ✓ Email Copied
     </div>
 
-    <!-- NAVIGATION HEADER -->
-    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 lg:px-16 py-6 md:py-8 transition-all duration-500" id="navbar">
-        <a href="#home" class="font-heading text-lg md:text-xl tracking-[0.2em] font-extrabold magnetic-target hover-grow text-white shrink-0">
-            CK<span class="text-[8px] md:text-[10px] tracking-normal font-light align-super">26</span>
+    <!-- NAVIGATION -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 lg:px-[8vw] py-5 md:py-7 transition-all duration-400">
+        <a href="#home" class="font-heading text-base md:text-lg tracking-[0.2em] font-extrabold text-white shrink-0">
+            CK<span class="text-[7px] md:text-[9px] tracking-normal font-light align-super" style="color:var(--orange-glow);">26</span>
         </a>
 
-        <!-- Desktop Navigation Items -->
-        <nav class="hidden md:flex space-x-6 lg:space-x-10 tracking-[0.3em] text-[10px] lg:text-xs font-medium uppercase text-neutral-400 items-center">
-            <a href="#home" class="nav-link relative py-1 hover:text-white transition-colors duration-300">Home</a>
-            <a href="#about" class="nav-link relative py-1 hover:text-white transition-colors duration-300">About</a>
-            <a href="#work" class="nav-link relative py-1 hover:text-white transition-colors duration-300">Projects</a>
-            <a href="#skills" class="nav-link relative py-1 hover:text-white transition-colors duration-300">Skills</a>
-            <a href="#lab" class="nav-link relative py-1 hover:text-white transition-colors duration-300">Lab</a>
-            <a href="#contact" class="nav-link relative py-1 hover:text-white transition-colors duration-300">Contact</a>
-            <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border border-neutral-700 px-3 py-1 text-[10px] text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-sm">Resume ↗</a>
+        <nav class="hidden md:flex space-x-6 lg:space-x-8 tracking-[0.25em] text-[10px] font-medium uppercase text-neutral-400 items-center">
+            <a href="#home" class="nav-link relative py-1 transition-colors duration-200">Home</a>
+            <a href="#about" class="nav-link relative py-1 transition-colors duration-200">About</a>
+            <a href="#work" class="nav-link relative py-1 transition-colors duration-200">Projects</a>
+            <a href="#skills" class="nav-link relative py-1 transition-colors duration-200">Skills</a>
+            <a href="#lab" class="nav-link relative py-1 transition-colors duration-200">Lab</a>
+            <a href="#contact" class="nav-link relative py-1 transition-colors duration-200">Contact</a>
+            <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border px-3 py-1.5 text-[10px] text-white transition-all duration-250 rounded-sm" style="border-color:rgba(255,107,43,0.4);" onmouseover="this.style.backgroundColor='var(--orange-glow)';this.style.color='#000';this.style.borderColor='var(--orange-glow)';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#fff';this.style.borderColor='rgba(255,107,43,0.4)';">Resume ↗</a>
         </nav>
 
-        <!-- Right Side Brand Descriptor -->
-        <div class="hidden lg:block text-[9px] tracking-[0.4em] uppercase text-neutral-400 font-semibold shrink-0">
-            EST. 2026 / INDIA
-        </div>
+        <div class="hidden lg:block text-[9px] tracking-[0.35em] uppercase text-neutral-400 font-semibold shrink-0">EST. 2026 / INDIA</div>
 
-        <!-- Mobile Menu Trigger -->
-        <button id="mobile-menu-trigger" class="md:hidden flex flex-col justify-between h-5 w-7 z-[60] group relative box-content p-2 -mr-2">
-            <span class="w-full h-[1.5px] bg-white transition-all duration-300 origin-left" id="mob-line-1"></span>
-            <span class="w-2/3 h-[1.5px] bg-white transition-all duration-300 ml-auto" id="mob-line-2"></span>
+        <!-- Mobile Hamburger -->
+        <button id="mob-trigger" class="md:hidden flex flex-col justify-between h-4 w-6 z-[60] p-2 -mr-2 box-content">
+            <span id="ml1" class="w-full h-[1.5px] bg-white transition-all duration-300 origin-left block"></span>
+            <span id="ml2" class="w-2/3 h-[1.5px] bg-white transition-all duration-300 ml-auto block"></span>
         </button>
     </header>
 
-    <!-- FULLSCREEN MOBILE MENU Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center pointer-events-none opacity-0 transition-opacity duration-500 overflow-y-auto py-24 px-6">
-        <nav class="flex flex-col space-y-6 text-center text-2xl xs:text-3xl tracking-[0.2em] font-heading font-extrabold uppercase mb-10 w-full">
-            <a href="#home" class="mobile-nav-link text-neutral-500 hover:text-white transition-colors duration-300 py-3 w-full block">Home</a>
-            <a href="#about" class="mobile-nav-link text-neutral-500 hover:text-white transition-colors duration-300 py-3 w-full block">About</a>
-            <a href="#work" class="mobile-nav-link text-neutral-500 hover:text-white transition-colors duration-300 py-3 w-full block">Projects</a>
-            <a href="#skills" class="mobile-nav-link text-neutral-500 hover:text-white transition-colors duration-300 py-3 w-full block">Skills</a>
-            <a href="#contact" class="mobile-nav-link text-neutral-500 hover:text-white transition-colors duration-300 py-3 w-full block">Contact</a>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center opacity-0 invisible pointer-events-none transition-all duration-400 overflow-y-auto py-24 px-6">
+        <nav class="flex flex-col space-y-5 text-center text-2xl tracking-[0.2em] font-heading font-extrabold uppercase mb-10 w-full">
+            <a href="#home" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Home</a>
+            <a href="#about" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">About</a>
+            <a href="#work" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Projects</a>
+            <a href="#skills" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Skills</a>
+            <a href="#contact" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Contact</a>
         </nav>
-        <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border border-white px-8 py-4 uppercase text-xs tracking-widest text-white hover:bg-white hover:text-black transition-all duration-300 rounded-sm">Resume ↗</a>
+        <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border border-white px-8 py-4 uppercase text-xs tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 rounded-sm">Resume ↗</a>
     </div>
 
-    <!-- MAIN CONTENT FRAME (exhibition layout) -->
+    <!-- MAIN -->
     <main class="relative z-20 mx-auto px-4 sm:px-6 lg:px-[8vw] select-none">
 
-        <!-- 1. HERO SECTION -->
-        <section id="home" class="min-h-screen flex flex-col justify-between pt-28 md:pt-36 pb-12 md:pb-16 relative overflow-hidden">
+        <!-- 1. HERO -->
+        <section id="home" class="min-h-screen flex flex-col justify-between pt-24 md:pt-32 pb-10 md:pb-14 relative overflow-hidden">
             <div class="flex-grow flex flex-col justify-center">
-                <div class="space-y-3 md:space-y-4 w-full">
-                    <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 overflow-hidden py-1">
-                        <span class="inline-block translate-y-full transition-transform duration-1000 delay-100" id="hero-subtitle-top">Software Engineering Portfolio</span>
+                <div class="space-y-2 md:space-y-4 w-full">
+                    <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 overflow-hidden py-1">
+                        <span class="hero-text-reveal inline-block" id="hs0">Software Engineering Portfolio</span>
                     </p>
-                    <div class="font-heading font-extrabold leading-[1.1] md:leading-[1.15] tracking-tight text-[9vw] md:text-[7.5vw] lg:text-[8.5vw] break-words w-full">
-                        <h1 class="overflow-hidden py-1 md:py-2 w-full">
-                            <span class="inline-block translate-y-full transition-transform duration-1000 delay-300 pr-4" id="hero-title-1">CHUNDURI</span>
-                        </h1>
-                        <h1 class="overflow-hidden py-1 md:py-2 text-neutral-300 flex justify-between items-center w-full">
-                            <span class="inline-block translate-y-full transition-transform duration-1000 delay-500 pr-4" id="hero-title-2">KAUSHIK</span>
-                            <span class="text-xs tracking-[0.4em] uppercase font-body font-light text-neutral-400 hidden lg:inline-block w-48 text-right pr-4 leading-relaxed shrink-0">Crafting high-scale backend engines and intelligence layers.</span>
-                        </h1>
+                    <div class="hero-text font-heading font-extrabold leading-[1.1] tracking-tight">
+                        <div class="py-1">
+                            <span class="hero-text-reveal inline-block pr-2" id="hs1">CHUNDURI</span>
+                        </div>
+                        <div class="py-1 flex flex-col xs:flex-row xs:justify-between xs:items-end gap-2">
+                            <span class="hero-text-reveal inline-block pr-2 text-neutral-300" id="hs2">KAUSHIK</span>
+                            <span class="text-[9px] tracking-[0.35em] uppercase font-body font-light text-neutral-400 hidden lg:inline-block w-44 text-right shrink-0 leading-relaxed mb-2">Crafting high-scale backend engines and intelligence layers.</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Footer details -->
-            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-8 md:gap-10 pt-8 border-t border-neutral-900">
-                <div class="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-3 text-[9px] md:text-[10px] tracking-[0.25em] md:tracking-[0.3em] uppercase text-neutral-400 font-semibold w-full xl:w-auto">
+            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-6 pt-8 border-t border-neutral-900">
+                <div class="flex flex-wrap gap-x-5 gap-y-2 text-[8px] md:text-[9px] tracking-[0.25em] uppercase text-neutral-400 font-semibold">
                     <div>SOFTWARE ENGINEER</div>
-                    <div class="hidden xs:block">•</div>
+                    <div class="text-neutral-700">•</div>
                     <div>BACKEND SYSTEMS</div>
-                    <div class="hidden xs:block">•</div>
+                    <div class="text-neutral-700">•</div>
                     <div>AI & DATA SCIENCE</div>
                 </div>
-                <!-- Action Buttons -->
-                <div class="flex flex-col xs:flex-row w-full xs:w-auto items-start xs:items-center gap-4 md:gap-10 mt-6 xl:mt-0">
-                    <a href="#about" class="group flex items-center gap-4 text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white hover-grow magnetic-target w-full xs:w-auto py-2">
-                        <span class="w-10 h-10 shrink-0 flex items-center justify-center border border-white rounded-full group-hover:bg-white group-hover:text-black transition-all duration-300 relative">
-                            <svg class="w-4 h-4 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                <div class="flex flex-col xs:flex-row items-start xs:items-center gap-4 md:gap-8">
+                    <a href="#about" class="group flex items-center gap-3 text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-white py-1">
+                        <span class="w-9 h-9 shrink-0 flex items-center justify-center border border-white rounded-full group-hover:bg-white group-hover:text-black transition-all duration-250 relative">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                         </span>
                         Enter Exhibit
                     </a>
-                    <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="group flex items-center gap-4 text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-neutral-400 hover:text-white hover-grow magnetic-target w-full xs:w-auto py-2">
-                        <span class="w-10 h-10 shrink-0 flex items-center justify-center border border-neutral-400 group-hover:border-white rounded-full transition-all duration-300 group-hover:bg-white group-hover:text-black relative">
-                            <svg class="w-4 h-4 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
+                    <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="group flex items-center gap-3 text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400 hover:text-white py-1 transition-colors duration-200">
+                        <span class="w-9 h-9 shrink-0 flex items-center justify-center border border-neutral-600 group-hover:border-[var(--orange-glow)] group-hover:bg-[var(--orange-glow)] group-hover:text-black rounded-full transition-all duration-250 relative">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5v10M19 5H9"/></svg>
                         </span>
                         Resume
                     </a>
@@ -280,243 +315,209 @@
             </div>
         </section>
 
-        <!-- 2. ABOUT SECTION -->
-        <section id="about" class="py-20 md:py-32 flex flex-col justify-center min-h-screen border-t border-neutral-900">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-12 md:mb-16">01 / ABOUT ME</p>
+        <!-- 2. ABOUT -->
+        <section id="about" class="py-16 md:py-28 flex flex-col justify-center border-t border-neutral-900">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">01 / ABOUT ME</p>
             
-            <div class="max-w-5xl space-y-8 md:space-y-12">
-                <div class="reveal-parent overflow-hidden py-1">
-                    <h2 class="text-xl sm:text-2xl md:text-5xl font-light tracking-tight leading-[1.4] md:leading-[1.3] text-neutral-300 reveal-element transition-all duration-1000 transform translate-y-20 opacity-0">
+            <div class="max-w-5xl space-y-6 md:space-y-10">
+                <div class="reveal-element">
+                    <h2 class="text-xl sm:text-2xl md:text-4xl font-light tracking-tight leading-[1.4] text-neutral-300">
                         I build <span class="text-white font-semibold">high-performance backend architectures</span> and robust data pipelines designed for scale.
                     </h2>
                 </div>
-                
-                <div class="reveal-parent overflow-hidden py-1">
-                    <h2 class="text-xl sm:text-2xl md:text-5xl font-light tracking-tight leading-[1.4] md:leading-[1.3] text-neutral-300 reveal-element transition-all duration-1000 transform translate-y-20 opacity-0">
-                        My skill set centers on modern software engineering practices, distributed databases, and applying <span class="text-white font-semibold">intelligent agent networks</span> to production.
+                <div class="reveal-element" style="transition-delay:0.1s;">
+                    <h2 class="text-xl sm:text-2xl md:text-4xl font-light tracking-tight leading-[1.4] text-neutral-300">
+                        My skill set centers on modern software engineering practices, distributed databases, and applying <span class="font-semibold" style="color:var(--orange-glow);">intelligent agent networks</span> to production.
                     </h2>
                 </div>
-
-                <div class="reveal-parent overflow-hidden py-1">
-                    <h2 class="text-xl sm:text-2xl md:text-5xl font-light tracking-tight leading-[1.4] md:leading-[1.3] text-neutral-300 reveal-element transition-all duration-1000 transform translate-y-20 opacity-0">
-                        Currently completing my B.Tech in Computer Science and Engineering (Data Science) at <span class="text-white font-semibold border-b border-white">VIT Vellore</span>.
+                <div class="reveal-element" style="transition-delay:0.2s;">
+                    <h2 class="text-xl sm:text-2xl md:text-4xl font-light tracking-tight leading-[1.4] text-neutral-300">
+                        Currently completing my B.Tech in Computer Science (Data Science) at <span class="text-white font-semibold" style="border-bottom:1px solid var(--orange-glow);">VIT Vellore</span>.
                     </h2>
                 </div>
             </div>
 
-            <!-- Education chronology -->
-            <div class="mt-16 md:mt-28 grid grid-cols-1 md:grid-cols-4 gap-8 pt-12 border-t border-neutral-900">
+            <div class="mt-12 md:mt-20 grid grid-cols-1 md:grid-cols-4 gap-8 pt-10 border-t border-neutral-900">
                 <div class="col-span-1">
-                    <h3 class="text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-400">Education Chronology</h3>
+                    <h3 class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-neutral-400">Education</h3>
                 </div>
-                <div class="col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8">
-                    <div class="space-y-3 md:space-y-4 border-l border-neutral-800 pl-5 md:pl-6 py-2">
-                        <div class="text-neutral-400 text-[10px] md:text-xs tracking-widest font-mono">2023 - PRESENT</div>
-                        <div class="text-base md:text-lg font-bold tracking-tight leading-tight">VIT VELLORE</div>
-                        <div class="text-xs md:text-sm text-neutral-400 font-light">B.Tech Computer Science & Eng. (Data Science)</div>
+                <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="space-y-2 border-l-2 pl-5 py-2" style="border-color:var(--orange-dim);">
+                        <div class="text-neutral-400 text-[9px] tracking-widest font-mono">2023 – PRESENT</div>
+                        <div class="text-sm md:text-base font-bold tracking-tight">VIT VELLORE</div>
+                        <div class="text-xs text-neutral-400 font-light">B.Tech CSE (Data Science)</div>
                     </div>
-                    <div class="space-y-3 md:space-y-4 border-l border-neutral-800 pl-5 md:pl-6 py-2">
-                        <div class="text-neutral-400 text-[10px] md:text-xs tracking-widest font-mono">ACADEMICS</div>
-                        <div class="text-base md:text-lg font-bold tracking-tight leading-tight">CGPA: 9.22</div>
-                        <div class="text-xs md:text-sm text-neutral-400 font-light">Applied machine learning and systems programming structures.</div>
+                    <div class="space-y-2 border-l-2 pl-5 py-2" style="border-color:var(--orange-dim);">
+                        <div class="text-neutral-400 text-[9px] tracking-widest font-mono">ACADEMICS</div>
+                        <div class="text-sm md:text-base font-bold tracking-tight" style="color:var(--orange-glow);">CGPA: 9.22</div>
+                        <div class="text-xs text-neutral-400 font-light">Applied ML and systems programming.</div>
                     </div>
-                    <div class="space-y-3 md:space-y-4 border-l border-neutral-800 pl-5 md:pl-6 py-2">
-                        <div class="text-neutral-400 text-[10px] md:text-xs tracking-widest font-mono">OBJECTIVE</div>
-                        <div class="text-base md:text-lg font-bold tracking-tight leading-tight">SDE & AI ROLES</div>
-                        <div class="text-xs md:text-sm text-neutral-400 font-light">Seeking high-growth professional engineering opportunities.</div>
+                    <div class="space-y-2 border-l-2 pl-5 py-2" style="border-color:var(--orange-dim);">
+                        <div class="text-neutral-400 text-[9px] tracking-widest font-mono">OBJECTIVE</div>
+                        <div class="text-sm md:text-base font-bold tracking-tight">SDE & AI ROLES</div>
+                        <div class="text-xs text-neutral-400 font-light">Seeking high-growth engineering opportunities.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. PROJECTS SECTION -->
-        <section id="work" class="py-20 md:py-32 border-t border-neutral-900">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-4">
+        <!-- 3. PROJECTS -->
+        <section id="work" class="py-16 md:py-28 border-t border-neutral-900">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-3">
                 <div class="w-full">
-                    <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-4">02 / PORTFOLIO WORK</p>
-                    <h2 class="text-[9vw] sm:text-4xl md:text-6xl font-heading font-extrabold tracking-tight leading-tight break-words">PROJECT CASE STUDIES</h2>
+                    <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-3">02 / PORTFOLIO WORK</p>
+                    <h2 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight leading-tight">PROJECT CASE STUDIES</h2>
                 </div>
-                <p class="text-[10px] md:text-xs text-neutral-400 uppercase tracking-widest font-mono shrink-0">[ CLICK TO INSPECT ]</p>
+                <p class="text-[9px] text-neutral-400 uppercase tracking-widest font-mono shrink-0">[ CLICK TO INSPECT ]</p>
             </div>
 
-            <!-- Grid of Exhibit Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-16">
-                <!-- CARD 1 -->
-                <div class="project-card group border border-neutral-900 hover:border-neutral-400 bg-neutral-950 p-6 md:p-8 lg:p-12 flex flex-col justify-between min-h-[350px] md:min-h-[400px] transition-all duration-500 hover-grow magnetic-target cursor-pointer" data-project="hr-assist">
-                    <div class="flex justify-between items-start mb-10 md:mb-12">
-                        <span class="text-[10px] md:text-xs font-mono text-neutral-400">[ PROJECT A ]</span>
-                        <span class="text-[10px] md:text-xs bg-white text-black font-semibold px-2 py-1 tracking-wider uppercase">Agentic AI</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-10">
+                <div class="project-card group border border-neutral-900 bg-neutral-950 p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-[300px] md:min-h-[360px] cursor-pointer" data-project="hr-assist">
+                    <div class="flex justify-between items-start mb-6 md:mb-10">
+                        <span class="text-[9px] font-mono text-neutral-400">[ PROJECT A ]</span>
+                        <span class="project-badge text-[9px] bg-white text-black font-semibold px-2 py-0.5 tracking-wider uppercase transition-all duration-300">Agentic AI</span>
                     </div>
                     <div>
-                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-4 group-hover:text-white text-neutral-200 transition-colors duration-300 leading-tight">
-                            HR Assist Agentic AI System
-                        </h3>
-                        <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed mb-6">
-                            Agentic AI platform automating onboarding, leave management, scheduling, and ticket workflows through MCP-powered autonomous tools and backend orchestration.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">Python</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">MCP</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">FastMCP</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">Pydantic</span>
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight mb-3 text-neutral-200 group-hover:text-white transition-colors duration-300 leading-tight">HR Assist Agentic AI System</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed mb-4">Agentic AI platform automating onboarding, leave management, scheduling, and ticket workflows through MCP-powered autonomous tools.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">Python</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">MCP</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">FastMCP</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">Pydantic</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 2 -->
-                <div class="project-card group border border-neutral-900 hover:border-neutral-400 bg-neutral-950 p-6 md:p-8 lg:p-12 flex flex-col justify-between min-h-[350px] md:min-h-[400px] transition-all duration-500 hover-grow magnetic-target cursor-pointer" data-project="speed-bump">
-                    <div class="flex justify-between items-start mb-10 md:mb-12">
-                        <span class="text-[10px] md:text-xs font-mono text-neutral-400">[ PROJECT B ]</span>
-                        <span class="text-[10px] md:text-xs bg-white text-black font-semibold px-2 py-1 tracking-wider uppercase">Computer Vision</span>
+                <div class="project-card group border border-neutral-900 bg-neutral-950 p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-[300px] md:min-h-[360px] cursor-pointer" data-project="speed-bump">
+                    <div class="flex justify-between items-start mb-6 md:mb-10">
+                        <span class="text-[9px] font-mono text-neutral-400">[ PROJECT B ]</span>
+                        <span class="project-badge text-[9px] bg-white text-black font-semibold px-2 py-0.5 tracking-wider uppercase transition-all duration-300">Computer Vision</span>
                     </div>
                     <div>
-                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-4 group-hover:text-white text-neutral-200 transition-colors duration-300 leading-tight">
-                            Speed Bump Detection System
-                        </h3>
-                        <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed mb-6">
-                            Real-time computer vision system using multiple YOLOv8 models for intelligent speed bump detection with optimized preprocessing and inference performance.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">YOLOv8</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">OpenCV</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">Deep Learning</span>
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight mb-3 text-neutral-200 group-hover:text-white transition-colors duration-300 leading-tight">Speed Bump Detection System</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed mb-4">Real-time computer vision using multiple YOLOv8 models for intelligent speed bump detection with optimized inference.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">YOLOv8</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">OpenCV</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">Deep Learning</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 3 -->
-                <div class="project-card group border border-neutral-900 hover:border-neutral-400 bg-neutral-950 p-6 md:p-8 lg:p-12 flex flex-col justify-between min-h-[350px] md:min-h-[400px] transition-all duration-500 hover-grow magnetic-target cursor-pointer" data-project="real-estate">
-                    <div class="flex justify-between items-start mb-10 md:mb-12">
-                        <span class="text-[10px] md:text-xs font-mono text-neutral-400">[ PROJECT C ]</span>
-                        <span class="text-[10px] md:text-xs bg-white text-black font-semibold px-2 py-1 tracking-wider uppercase">RAG System</span>
+                <div class="project-card group border border-neutral-900 bg-neutral-950 p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-[300px] md:min-h-[360px] cursor-pointer" data-project="real-estate">
+                    <div class="flex justify-between items-start mb-6 md:mb-10">
+                        <span class="text-[9px] font-mono text-neutral-400">[ PROJECT C ]</span>
+                        <span class="project-badge text-[9px] bg-white text-black font-semibold px-2 py-0.5 tracking-wider uppercase transition-all duration-300">RAG System</span>
                     </div>
                     <div>
-                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-4 group-hover:text-white text-neutral-200 transition-colors duration-300 leading-tight">
-                            Real Estate RAG Assistant
-                        </h3>
-                        <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed mb-6">
-                            Hybrid Retrieval-Augmented Generation system combining semantic vector search and keyword retrieval with embedding pipelines and grounded LLM responses.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">Generative AI</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">NLP</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">LangChain</span>
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight mb-3 text-neutral-200 group-hover:text-white transition-colors duration-300 leading-tight">Real Estate RAG Assistant</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed mb-4">Hybrid RAG system combining semantic vector search and keyword retrieval with embedding pipelines and grounded LLM responses.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">Generative AI</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">LangChain</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">NLP</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 4 -->
-                <div class="project-card group border border-neutral-900 hover:border-neutral-400 bg-neutral-950 p-6 md:p-8 lg:p-12 flex flex-col justify-between min-h-[350px] md:min-h-[400px] transition-all duration-500 hover-grow magnetic-target cursor-pointer" data-project="pos-system">
-                    <div class="flex justify-between items-start mb-10 md:mb-12">
-                        <span class="text-[10px] md:text-xs font-mono text-neutral-400">[ PROJECT D ]</span>
-                        <span class="text-[10px] md:text-xs bg-white text-black font-semibold px-2 py-1 tracking-wider uppercase">Full Stack</span>
+                <div class="project-card group border border-neutral-900 bg-neutral-950 p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-[300px] md:min-h-[360px] cursor-pointer" data-project="pos-system">
+                    <div class="flex justify-between items-start mb-6 md:mb-10">
+                        <span class="text-[9px] font-mono text-neutral-400">[ PROJECT D ]</span>
+                        <span class="project-badge text-[9px] bg-white text-black font-semibold px-2 py-0.5 tracking-wider uppercase transition-all duration-300">Full Stack</span>
                     </div>
                     <div>
-                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-4 group-hover:text-white text-neutral-200 transition-colors duration-300 leading-tight">
-                            Fullstack POS System
-                        </h3>
-                        <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed mb-6">
-                            Full-stack point-of-sale application for inventory management, billing, sales tracking, and business analytics with a scalable backend architecture.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">React</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">Spring Boot</span>
-                            <span class="text-[9px] md:text-[10px] font-mono border border-neutral-800 px-2 py-1 md:px-2.5 text-neutral-400">MySQL</span>
+                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight mb-3 text-neutral-200 group-hover:text-white transition-colors duration-300 leading-tight">Fullstack POS System</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed mb-4">Full-stack point-of-sale application for inventory management, billing, sales tracking, and business analytics.</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">React</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">Spring Boot</span>
+                            <span class="text-[8px] font-mono border border-neutral-800 px-2 py-1 text-neutral-400">MySQL</span>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </section>
 
-        <!-- 4. SKILLS SECTION -->
-        <section id="skills" class="py-20 md:py-32 border-t border-neutral-900">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-12 md:mb-16">03 / SKILLS MATRIX</p>
+        <!-- 4. SKILLS -->
+        <section id="skills" class="py-16 md:py-28 border-t border-neutral-900">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">03 / SKILLS MATRIX</p>
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-12 lg:gap-24">
-                <div class="space-y-4 w-full">
-                    <h2 class="text-[9vw] sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight leading-tight break-words">TECHNICAL SKILLS</h2>
-                    <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed">Hover over specific categories of the matrix to focus and isolate specialized stack layers.</p>
+            <div class="flex flex-col xl:flex-row gap-8 md:gap-16">
+                <!-- Scale heading down for small mobile viewports to prevent layout overflow -->
+                <div class="w-full xl:w-[40%] space-y-3 shrink-0">
+                    <h2 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl xl:text-4xl 2xl:text-5xl font-heading font-extrabold tracking-tight leading-tight">TECHNICAL<br>SKILLS</h2>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Hover the tags to isolate specialized stack layers.</p>
                 </div>
                 
-                <div class="lg:col-span-2 space-y-8" id="skills-matrix-container">
-                    <!-- Programming -->
-                    <div class="border-b border-neutral-900 pb-6">
-                        <h3 class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-neutral-400 mb-4 font-mono">[ 01. LANGUAGES ]</h3>
-                        <div class="flex flex-wrap gap-2 md:gap-3">
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">Python</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">Golang</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">TypeScript</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">C++</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">SQL</span>
+                <div class="w-full xl:w-[60%] space-y-7 min-w-0">
+                    <div class="border-b border-neutral-900 pb-5">
+                        <h3 class="text-[9px] uppercase tracking-[0.25em] text-neutral-400 mb-3 font-mono">[ 01. LANGUAGES ]</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">Python</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">Golang</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">TypeScript</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">C++</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">SQL</span>
                         </div>
                     </div>
-
-                    <!-- Backend Architecture -->
-                    <div class="border-b border-neutral-900 pb-6">
-                        <h3 class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-neutral-400 mb-4 font-mono">[ 02. BACKEND & DATABASES ]</h3>
-                        <div class="flex flex-wrap gap-2 md:gap-3">
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">FastAPI</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">gRPC / Protobufs</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">PostgreSQL</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">Redis</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">Apache Kafka</span>
+                    <div class="border-b border-neutral-900 pb-5">
+                        <h3 class="text-[9px] uppercase tracking-[0.25em] text-neutral-400 mb-3 font-mono">[ 02. BACKEND & DATABASES ]</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">FastAPI</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">gRPC / Protobufs</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">PostgreSQL</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">Redis</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">Apache Kafka</span>
                         </div>
                     </div>
-
-                    <!-- AI/ML -->
-                    <div class="border-b border-neutral-900 pb-6">
-                        <h3 class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-neutral-400 mb-4 font-mono">[ 03. INTELLIGENCE SYSTEMS ]</h3>
-                        <div class="flex flex-wrap gap-2 md:gap-3">
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">PyTorch</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">CrewAI / Agents</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">RAG Setup</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">ChromaDB</span>
-                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm uppercase tracking-wider bg-neutral-950 transition-all duration-300 hover:border-white hover:bg-white hover:text-black">TensorFlow</span>
+                    <div class="border-b border-neutral-900 pb-5">
+                        <h3 class="text-[9px] uppercase tracking-[0.25em] text-neutral-400 mb-3 font-mono">[ 03. INTELLIGENCE SYSTEMS ]</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">PyTorch</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">CrewAI / Agents</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">RAG Setup</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">ChromaDB</span>
+                            <span class="skill-tag border border-neutral-800 px-3 py-1.5 text-xs uppercase tracking-wider bg-neutral-950">TensorFlow</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CERTIFICATIONS SECTION -->
-        <section id="certifications" class="py-20 md:py-32 border-t border-neutral-900 overflow-visible">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-12 md:mb-16">03b / CREDENTIAL MATRIX</p>
+        <!-- CERTIFICATIONS -->
+        <section class="py-16 md:py-28 border-t border-neutral-900">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">03b / CREDENTIAL MATRIX</p>
             
-            <div class="flex flex-col xl:flex-row gap-10 md:gap-16 justify-between items-start">
-                
-                <div class="w-full xl:w-[35%] space-y-4 md:space-y-6">
-                    <h2 class="text-[9vw] sm:text-4xl md:text-5xl lg:text-[4rem] font-heading font-extrabold tracking-tighter leading-[1.05] uppercase break-words">Professional<br>Certifications</h2>
-                    <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed max-w-sm mt-4 md:mt-8">Verified credentials validating system engineering capabilities, cloud infrastructure expertise, and intelligent application development.</p>
+            <div class="flex flex-col xl:flex-row gap-8 md:gap-12 justify-between items-start">
+                <!-- Scale font down on mobile elements (text-xl on mobile vs text-5xl on desktop) to prevent right margin bleeding -->
+                <div class="w-full xl:w-[40%] space-y-4 shrink-0">
+                    <h2 class="text-xl xs:text-2xl sm:text-3xl md:text-5xl xl:text-4xl 2xl:text-5xl font-heading font-extrabold tracking-tight xl:tracking-tighter leading-[1.05] uppercase">Professional<br>Certifications</h2>
+                    <p class="text-neutral-400 text-xs font-light leading-relaxed max-w-sm">Verified credentials validating cloud infrastructure expertise and intelligent application development.</p>
                 </div>
                 
-                <div class="w-full xl:w-[65%] relative pt-6 xl:pt-0">
-                    <div class="absolute -top-6 xl:-top-16 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border border-neutral-700 items-center justify-center hidden md:flex">
-                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                        <div class="border border-neutral-900 bg-neutral-950 p-6 md:p-8 flex flex-col justify-between rounded-sm hover:border-neutral-400 transition-all duration-300 min-h-[250px] md:min-h-[300px]">
-                            <div class="space-y-4">
-                                <span class="text-[9px] md:text-[10px] bg-neutral-800 text-white font-mono px-2 py-1 tracking-wider uppercase">ORACLE SYSTEMS</span>
-                                <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug mt-2">Oracle Cloud Infrastructure 2025 Certified Data Science Professional</h3>
-                                <p class="text-[11px] md:text-xs text-neutral-400 font-light leading-relaxed">Advanced execution of localized predictive model algorithms, dataset transformations, and enterprise validation loops inside Oracle Cloud Infrastructure configurations.</p>
+                <div class="w-full xl:w-[60%] min-w-0">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="border border-neutral-900 bg-neutral-950 p-5 md:p-7 flex flex-col justify-between rounded-sm transition-all duration-300 min-h-[240px]" style="border-color:rgba(122,48,16,0.3);" onmouseover="this.style.borderColor='var(--orange-dim)'" onmouseout="this.style.borderColor='rgba(122,48,16,0.3)'">
+                            <div class="space-y-3">
+                                <span class="text-[8px] bg-neutral-800 text-white font-mono px-2 py-1 tracking-wider uppercase">ORACLE SYSTEMS</span>
+                                <h3 class="text-base sm:text-lg font-bold tracking-tight leading-snug">Oracle Cloud Infrastructure 2025 Certified Data Science Professional</h3>
+                                <p class="text-[10px] text-neutral-400 font-light leading-relaxed">Advanced execution of localized predictive model algorithms and enterprise validation inside OCI.</p>
                             </div>
-                            <div class="text-[9px] md:text-[10px] font-mono text-neutral-500 mt-6 pt-4 border-t border-neutral-900 flex justify-between">
+                            <div class="text-[8px] font-mono text-neutral-500 mt-5 pt-3 border-t border-neutral-900 flex justify-between">
                                 <span>ORACLE UNIVERSITY</span>
-                                <span>VERIFIED</span>
+                                <span style="color:var(--orange-glow);">VERIFIED ✓</span>
                             </div>
                         </div>
-
-                        <div class="border border-neutral-900 bg-neutral-950 p-6 md:p-8 flex flex-col justify-between rounded-sm hover:border-neutral-400 transition-all duration-300 min-h-[250px] md:min-h-[300px]">
-                            <div class="space-y-4">
-                                <span class="text-[9px] md:text-[10px] bg-neutral-800 text-white font-mono px-2 py-1 tracking-wider uppercase">GENERATIVE AI</span>
-                                <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug mt-2">Oracle Cloud Infrastructure 2025 Certified Generative AI Professional</h3>
-                                <p class="text-[11px] md:text-xs text-neutral-400 font-light leading-relaxed">Focuses on deployment structures, large language model orchestrations, precise context retrieval structures (RAG), and custom agent systems.</p>
+                        <div class="border border-neutral-900 bg-neutral-950 p-5 md:p-7 flex flex-col justify-between rounded-sm transition-all duration-300 min-h-[240px]" style="border-color:rgba(122,48,16,0.3);" onmouseover="this.style.borderColor='var(--orange-dim)'" onmouseout="this.style.borderColor='rgba(122,48,16,0.3)'">
+                            <div class="space-y-3">
+                                <span class="text-[8px] bg-neutral-800 text-white font-mono px-2 py-1 tracking-wider uppercase">GENERATIVE AI</span>
+                                <h3 class="text-base sm:text-lg font-bold tracking-tight leading-snug">Oracle Cloud Infrastructure 2025 Certified Generative AI Professional</h3>
+                                <p class="text-[10px] text-neutral-400 font-light leading-relaxed">Focuses on LLM orchestration, precise RAG context retrieval, and custom agent system deployment.</p>
                             </div>
-                            <div class="text-[9px] md:text-[10px] font-mono text-neutral-500 mt-6 pt-4 border-t border-neutral-900 flex justify-between">
+                            <div class="text-[8px] font-mono text-neutral-500 mt-5 pt-3 border-t border-neutral-900 flex justify-between">
                                 <span>ORACLE UNIVERSITY</span>
-                                <span>VERIFIED</span>
+                                <span style="color:var(--orange-glow);">VERIFIED ✓</span>
                             </div>
                         </div>
                     </div>
@@ -524,790 +525,653 @@
             </div>
         </section>
 
-        <!-- 5. GITHUB CONSTELLATION LAB (HIDDEN ENTIRELY ON MOBILE) -->
-        <section id="lab" class="hidden md:block py-32 border-t border-neutral-900">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+        <!-- 5. GITHUB LAB — HIDDEN ON MOBILE -->
+        <section id="lab" class="hidden md:block py-16 md:py-28 border-t border-neutral-900">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-3">
                 <div>
-                    <p class="text-xs uppercase tracking-[0.5em] text-neutral-400 mb-4">04 / LAB DEPLOYMENTS</p>
-                    <h2 class="text-4xl md:text-5xl font-heading font-extrabold tracking-tight leading-tight">GITHUB LABORATORY</h2>
+                    <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-3">04 / LAB DEPLOYMENTS</p>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight leading-tight">GITHUB LABORATORY</h2>
                 </div>
-                <p class="text-xs text-neutral-400 uppercase tracking-widest font-mono">[ HOVER OVER STARS TO BRIDGE REPOSITORIES ]</p>
+                <p class="text-[9px] text-neutral-400 uppercase tracking-widest font-mono">[ HOVER NODES TO INSPECT REPOS ]</p>
             </div>
 
-            <div class="relative w-full h-[550px] border border-neutral-900 bg-neutral-950 bg-opacity-40 overflow-hidden flex flex-col justify-end p-8 group">
-                <div class="absolute inset-x-8 top-8 flex justify-between items-start pointer-events-none z-10 transition-all duration-500 group-hover:opacity-40">
-                    <span class="text-xs font-mono text-neutral-400">[ CONSTELLATION MAPPING ENGINE ]</span>
-                    <span class="text-xs font-mono text-neutral-400 select-none">INTERACTION STATUS: ONLINE</span>
+            <!-- Constellation Container -->
+            <div class="relative w-full border border-neutral-900 bg-neutral-950 overflow-hidden" style="height: clamp(340px, 55vw, 480px); background:rgba(10,10,10,0.7);">
+                <!-- Header label -->
+                <div class="absolute inset-x-4 top-4 flex justify-between items-start pointer-events-none z-10">
+                    <span class="text-[8px] font-mono text-neutral-600">[ CONSTELLATION MAPPING ENGINE ]</span>
+                    <span class="text-[8px] font-mono" style="color:var(--orange-dim);">INTERACTION: ONLINE</span>
                 </div>
 
-                <div id="star-data-panel" class="z-10 bg-black bg-opacity-90 border border-neutral-800 p-6 max-w-md backdrop-blur-md transition-all duration-500 opacity-0 transform translate-y-4 pointer-events-none">
-                    <div class="flex justify-between items-center mb-3">
-                        <span id="star-repo-badge" class="text-[9px] bg-white text-black px-2 py-0.5 tracking-wider uppercase font-bold">REPOS</span>
-                        <span id="star-repo-language" class="text-xs font-mono text-neutral-400">TypeScript</span>
+                <!-- Info panel -->
+                <div id="star-panel" class="absolute z-20 border p-4 max-w-[260px] md:max-w-sm transition-all duration-400 opacity-0 pointer-events-none" style="background:rgba(0,0,0,0.95); border-color:var(--orange-dim); bottom:16px; left:16px;">
+                    <div class="flex justify-between items-center mb-2">
+                        <span id="sp-badge" class="text-[7px] px-2 py-0.5 tracking-wider uppercase font-bold" style="background:var(--orange-glow);color:#000;">REPO</span>
+                        <span id="sp-lang" class="text-[9px] font-mono text-neutral-400">Python</span>
                     </div>
-                    <h4 id="star-repo-title" class="text-xl font-bold tracking-tight mb-2">Select a Node</h4>
-                    <p id="star-repo-desc" class="text-xs text-neutral-400 leading-relaxed font-light mb-4">Hover over any active star nodes floating across the constellation matrix to inspect corresponding engine architectures.</p>
-                    <div class="flex justify-between items-center text-[10px] text-neutral-500 font-mono">
-                        <span id="star-repo-stars">STARS: --</span>
-                        <a id="star-repo-link" href="#" target="_blank" class="hover-grow text-white hover:underline flex items-center gap-1 pointer-events-auto">VIEW REPOS CODE ↗</a>
-                    </div>
+                    <h4 id="sp-title" class="text-sm font-bold tracking-tight mb-1.5">Repository Name</h4>
+                    <p id="sp-desc" class="text-[10px] text-neutral-400 leading-relaxed mb-3">Description of the repository.</p>
+                    <a id="sp-link" href="#" target="_blank" class="text-[9px] font-mono uppercase tracking-wider hover:underline pointer-events-auto inline-flex items-center gap-1" style="color:var(--orange-glow);">VIEW CODE ↗</a>
                 </div>
 
                 <canvas id="constellation-canvas" class="absolute inset-0 w-full h-full"></canvas>
             </div>
         </section>
 
-        <!-- 6. CONTACT PIPELINE -->
-        <section id="contact" class="py-20 md:py-32 border-t border-neutral-900">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-12 md:mb-16">05 / CONTACT PIPELINE</p>
+        <!-- 6. CONTACT -->
+        <section id="contact" class="py-16 md:py-28 border-t border-neutral-900">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">05 / CONTACT PIPELINE</p>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-                <div class="space-y-6 md:space-y-8 w-full">
-                    <h2 class="text-[9vw] sm:text-4xl md:text-5xl lg:text-7xl font-heading font-extrabold tracking-tight leading-[1.15] text-white break-words">LET'S BUILD SOMETHING WORTH REMEMBERING.</h2>
-                    <p class="text-neutral-400 text-sm sm:text-base font-light leading-relaxed max-w-lg">I am currently seeking software engineering, backend engineering, and systems-focused developer roles where performant architecture matters.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14">
+                <div class="space-y-5">
+                    <!-- Adjusted size from text-3xl to text-lg/xl on narrow viewports to completely fix word clipping -->
+                    <h2 class="text-lg xs:text-xl sm:text-2xl md:text-5xl lg:text-6xl font-heading font-extrabold tracking-tight leading-[1.15]">LET'S BUILD SOMETHING WORTH REMEMBERING.</h2>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed max-w-md">Seeking software engineering, backend engineering, and systems-focused developer roles where performant architecture matters.</p>
                 </div>
 
-                <div class="flex flex-col justify-center space-y-2 sm:space-y-6 lg:pl-16">
-                    <button onclick="copyToClipboard('chundurisaikaushik@gmail.com')" class="group flex justify-between items-center border-b border-neutral-800 py-5 sm:py-6 hover:border-white transition-all duration-300 hover-grow magnetic-target text-left w-full">
-                        <div class="w-[85%]">
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono">[ EMAIL INBOX ]</span>
-                            <p class="text-base sm:text-lg md:text-xl font-semibold mt-1 truncate">chundurisaikaushik@gmail.com</p>
+                <div class="flex flex-col justify-center space-y-1 lg:pl-10">
+                    <button onclick="copyToClipboard('chundurisaikaushik@gmail.com')" class="contact-row group flex justify-between items-center border-b border-neutral-800 py-4 md:py-5 text-left w-full">
+                        <div class="overflow-hidden">
+                            <span class="contact-label text-[9px] uppercase tracking-widest text-neutral-400 font-mono transition-colors duration-200">[ EMAIL ]</span>
+                            <p class="text-sm sm:text-base md:text-lg font-semibold mt-0.5 truncate">chundurisaikaushik@gmail.com</p>
                         </div>
-                        <span class="text-sm sm:text-lg opacity-40 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2 shrink-0">📄 COPY</span>
+                        <span class="contact-arrow text-sm opacity-30 transition-all duration-200 shrink-0 ml-3">📄 COPY</span>
                     </button>
-
-                    <a href="https://linkedin.com/in/sai-kaushik-chunduri-a6130228b" target="_blank" class="group flex justify-between items-center border-b border-neutral-800 py-5 sm:py-6 hover:border-white transition-all duration-300 hover-grow magnetic-target">
+                    <a href="https://linkedin.com/in/sai-kaushik-chunduri-a6130228b" target="_blank" class="contact-row group flex justify-between items-center border-b border-neutral-800 py-4 md:py-5">
                         <div>
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono">[ DIRECTORY ]</span>
-                            <p class="text-base sm:text-lg md:text-xl font-semibold mt-1">LinkedIn Profile</p>
+                            <span class="contact-label text-[9px] uppercase tracking-widest text-neutral-400 font-mono transition-colors duration-200">[ LINKEDIN ]</span>
+                            <p class="text-sm sm:text-base md:text-lg font-semibold mt-0.5">LinkedIn Profile</p>
                         </div>
-                        <span class="text-sm sm:text-lg opacity-40 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2 shrink-0">↗</span>
+                        <span class="contact-arrow text-lg opacity-30 transition-all duration-200 shrink-0 ml-3">↗</span>
                     </a>
-
-                    <a href="https://github.com/Kaushik-verse" target="_blank" class="group flex justify-between items-center border-b border-neutral-800 py-5 sm:py-6 hover:border-white transition-all duration-300 hover-grow magnetic-target">
+                    <a href="https://github.com/Kaushik-verse" target="_blank" class="contact-row group flex justify-between items-center border-b border-neutral-800 py-4 md:py-5">
                         <div>
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono">[ DEVELOPER MATRIX ]</span>
-                            <p class="text-base sm:text-lg md:text-xl font-semibold mt-1">Kaushik-verse</p>
+                            <span class="contact-label text-[9px] uppercase tracking-widest text-neutral-400 font-mono transition-colors duration-200">[ GITHUB ]</span>
+                            <p class="text-sm sm:text-base md:text-lg font-semibold mt-0.5">Kaushik-verse</p>
                         </div>
-                        <span class="text-sm sm:text-lg opacity-40 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2 shrink-0">↗</span>
+                        <span class="contact-arrow text-lg opacity-30 transition-all duration-200 shrink-0 ml-3">↗</span>
                     </a>
-
-                    <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="group flex justify-between items-center border-b border-neutral-800 py-5 sm:py-6 hover:border-white transition-all duration-300 hover-grow magnetic-target">
+                    <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="contact-row group flex justify-between items-center border-b border-neutral-800 py-4 md:py-5">
                         <div>
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono">[ RESUME FILE ]</span>
-                            <p class="text-base sm:text-lg md:text-xl font-semibold mt-1">View Curriculum Vitae</p>
+                            <span class="contact-label text-[9px] uppercase tracking-widest text-neutral-400 font-mono transition-colors duration-200">[ RESUME ]</span>
+                            <p class="text-sm sm:text-base md:text-lg font-semibold mt-0.5">View Curriculum Vitae</p>
                         </div>
-                        <span class="text-sm sm:text-lg opacity-40 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2 shrink-0">↗ VIEW</span>
+                        <span class="contact-arrow text-sm opacity-30 transition-all duration-200 shrink-0 ml-3">↗ VIEW</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 7. THE EMOTIONAL ENDING: POSTCARD EXHIBIT -->
-        <section class="py-20 md:py-32 border-t border-neutral-900 flex flex-col justify-center items-center min-h-[80vh] md:min-h-screen relative overflow-hidden">
-            <p class="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] text-neutral-400 mb-12 md:mb-16">06 / A PERSONAL NOTE</p>
+        <!-- 7. POSTCARD -->
+        <section class="py-16 md:py-28 border-t border-neutral-900 flex flex-col justify-center items-center relative overflow-hidden">
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">06 / A PERSONAL NOTE</p>
 
-            <div class="perspective-1000 w-full max-w-2xl h-[380px] xs:h-[420px] sm:h-[480px] md:h-[520px] md:cursor-none group relative">
-                <div id="postcard-element" class="w-full h-full transform-style-3d transition-transform duration-[1.2s] ease-out absolute select-none cursor-pointer magnetic-target hover-grow" onclick="flipPostcard()">
-                    
-                    <!-- FRONT SIDE OF POSTCARD -->
-                    <div class="absolute inset-0 w-full h-full backface-hidden bg-[#fdfbf7] text-[#0f172a] p-5 sm:p-8 lg:p-12 shadow-2xl shadow-white/5 border border-stone-200 flex flex-col justify-between rounded-sm">
-                        
+            <div class="perspective-1000 w-full max-w-xl" style="height:clamp(340px, 60vw, 480px);">
+                <div id="postcard-el" class="w-full h-full transform-style-3d transition-transform duration-[1.1s] ease-out relative select-none cursor-pointer" onclick="flipPostcard()">
+                    <!-- Front -->
+                    <div class="absolute inset-0 backface-hidden bg-[#fdfbf7] text-[#0f172a] p-5 sm:p-8 shadow-2xl border border-stone-200 flex flex-col justify-between rounded-sm">
                         <div class="flex justify-between items-start">
-                            <div class="space-y-1">
-                                <span class="font-cursive text-lg sm:text-xl md:text-2xl lg:text-3xl opacity-80 transform -rotate-2 inline-block">To whom it may concern,</span>
-                            </div>
-                            <div class="w-10 h-14 sm:w-16 sm:h-20 border border-dashed border-stone-400 p-1 md:p-1.5 flex flex-col justify-between items-center text-center opacity-80 shrink-0 ml-4">
-                                <span class="text-[4px] sm:text-[6px] tracking-widest uppercase font-semibold text-stone-500 font-body">POSTAGE</span>
-                                <span class="text-[5px] sm:text-[7px] font-bold text-stone-600 font-mono leading-none">Curiosity Engine</span>
-                                <span class="text-[4px] sm:text-[6px] tracking-widest uppercase font-semibold text-stone-500 font-body">EST. 2026</span>
+                            <span class="font-cursive text-lg sm:text-2xl opacity-80 -rotate-1 inline-block">To whom it may concern,</span>
+                            <div class="w-10 h-14 sm:w-14 sm:h-18 border border-dashed border-stone-400 p-1 flex flex-col justify-between items-center text-center opacity-70 shrink-0 ml-4">
+                                <span class="text-[5px] tracking-widest uppercase font-body text-stone-500">POSTAGE</span>
+                                <span class="text-[5px] font-bold text-stone-600 font-mono leading-none">Curiosity<br>Engine</span>
+                                <span class="text-[5px] tracking-widest uppercase font-body text-stone-500">2026</span>
                             </div>
                         </div>
-
-                        <!-- Handwritten Body -->
-                        <div class="my-auto relative py-2 sm:py-4">
-                            <p class="font-cursive text-lg sm:text-xl md:text-2xl lg:text-[2rem] leading-snug text-[#0f172a] transform -rotate-1">
+                        <div class="my-auto py-3">
+                            <p class="font-cursive text-lg sm:text-2xl md:text-3xl leading-snug text-[#0f172a] -rotate-1">
                                 Hi, Thank you for exploring my work.<br><br>
-                                I enjoy building robust backend servers, systems pipelines, and intelligent interfaces. If my work resonates with you, I'd love to talk.
+                                I enjoy building robust backend servers, systems pipelines, and intelligent interfaces. If my work resonates, I'd love to talk.
                             </p>
                         </div>
-
-                        <div class="flex justify-between items-end border-t border-stone-200/60 pt-3 md:pt-4">
-                            <div>
-                                <p class="font-cursive text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#0f172a] font-bold transform -rotate-2">— Chunduri Kaushik</p>
-                            </div>
-                            <div class="text-[7px] sm:text-[8px] md:text-[9px] font-mono uppercase text-stone-500 tracking-wider text-right">
-                                <span>VIT VELLORE, INDIA</span><br>
-                                <span>CLASS OF 2026</span>
+                        <div class="flex justify-between items-end border-t border-stone-200 pt-3">
+                            <p class="font-cursive text-xl sm:text-3xl text-[#0f172a] font-bold -rotate-2">— Chunduri Kaushik</p>
+                            <div class="text-[7px] font-mono uppercase text-stone-500 tracking-wider text-right">
+                                VIT VELLORE, INDIA<br>CLASS OF 2026
                             </div>
                         </div>
                     </div>
-
-                    <!-- BACK SIDE OF POSTCARD -->
-                    <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#fdfbf7] text-stone-900 p-6 sm:p-12 shadow-2xl border border-stone-200 flex flex-col justify-center items-center text-center rounded-sm">
-                        <div class="space-y-4 sm:space-y-6">
-                            <span class="text-3xl sm:text-4xl text-black">🖤</span>
-                            <h3 class="font-cursive text-3xl sm:text-4xl md:text-5xl text-black font-bold">Thank you.</h3>
-                            <p class="font-cursive text-lg sm:text-2xl lg:text-3xl text-stone-600 max-w-sm">Hope we build something amazing together.</p>
-                            <span class="text-[6px] sm:text-[8px] font-mono tracking-widest uppercase text-stone-400 block mt-8 sm:mt-12">[ CLICK TO FLIP POSTCARD OVER ]</span>
+                    <!-- Back -->
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[#fdfbf7] p-8 shadow-2xl border border-stone-200 flex flex-col justify-center items-center text-center rounded-sm">
+                        <div class="space-y-4">
+                            <span class="text-4xl">🖤</span>
+                            <h3 class="font-cursive text-3xl sm:text-5xl text-black font-bold">Thank you.</h3>
+                            <p class="font-cursive text-xl sm:text-2xl text-stone-600 max-w-xs">Hope we build something amazing together.</p>
+                            <span class="text-[7px] font-mono tracking-widest uppercase text-stone-400 block mt-8">[ CLICK TO FLIP BACK ]</span>
                         </div>
                     </div>
-
                 </div>
             </div>
             
-            <p class="text-[9px] md:text-xs uppercase tracking-[0.3em] text-neutral-500 mt-10 md:mt-12">[ CLICK ON THE PAPER TO REVERSE ]</p>
+            <p class="text-[8px] uppercase tracking-[0.3em] text-neutral-500 mt-8">[ CLICK ON THE PAPER TO REVERSE ]</p>
         </section>
-
     </main>
 
-    <!-- FOOTER LICENSE -->
-    <footer class="py-10 md:py-12 pb-24 md:pb-12 border-t border-neutral-900 relative z-20 text-center text-[8px] md:text-[10px] text-neutral-500 tracking-[0.3em] md:tracking-[0.4em] uppercase px-4">
-        © 2026 CHUNDURI KAUSHIK. ALL ART AND BLUEPRINTS LICENSED.
+    <!-- Footer -->
+    <footer class="py-8 pb-20 md:pb-10 border-t border-neutral-900 relative z-20 text-center text-[8px] text-neutral-500 tracking-[0.3em] uppercase px-4">
+        © 2026 CHUNDURI KAUSHIK. ALL RIGHTS RESERVED.
     </footer>
 
-    
-    <!-- Audio Source (Hidden) -->
-    <audio id="ambient-audio" src="The_Room_Unfolding.mp3" loop preload="auto"></audio>
+    <!-- Audio -->
+    <audio id="ambient-audio" src="The_Room_Unfolding.mp3" loop preload="none"></audio>
 
-    <!-- Visual Audio Toggle Equalizer -->
-    <button id="sound-toggle" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[100] flex items-center gap-3 text-white group hover-grow magnetic-target mix-blend-difference md:cursor-none p-2 -m-2 box-content">
-        <span class="text-[10px] md:text-[11px] font-body font-normal tracking-[0.3em] uppercase hidden sm:inline-block">Sound: <span id="sound-state" class="font-bold">OFF</span></span>
-        <div class="flex items-end gap-[3px] h-4 w-6 justify-center">
+    <!-- Sound Toggle -->
+    <button id="sound-toggle" class="sound-btn fixed bottom-5 right-5 md:bottom-7 md:right-7 z-[100] flex items-center gap-2.5 text-white">
+        <span class="text-[9px] font-body tracking-[0.25em] uppercase hidden sm:inline-block">Sound: <span id="sound-state" class="font-bold">OFF</span></span>
+        <div class="flex items-end gap-[2.5px] h-4 w-5 justify-center">
             <div class="eq-bar w-[2px] bg-white h-1 rounded-t-sm"></div>
             <div class="eq-bar w-[2px] bg-white h-2 rounded-t-sm"></div>
             <div class="eq-bar w-[2px] bg-white h-1 rounded-t-sm"></div>
-            <div class="eq-bar w-[2px] bg-white h-[6px] rounded-t-sm"></div>
+            <div class="eq-bar w-[2px] bg-white h-[5px] rounded-t-sm"></div>
             <div class="eq-bar w-[2px] bg-white h-[2px] rounded-t-sm"></div>
         </div>
     </button>
 
-
-    <!-- IMMERSIVE BLUEPRINT PROJECT POPUP MODALS -->
-    <div id="project-modal-overlay" class="fixed inset-0 bg-black bg-opacity-95 z-[999] pointer-events-none opacity-0 transition-opacity duration-500 backdrop-blur-md flex justify-center items-center p-4">
-        <div id="project-modal-container" class="border border-neutral-800 bg-neutral-950 max-w-4xl w-full max-h-[85vh] overflow-y-auto p-6 pt-16 md:p-12 text-white relative transition-all duration-500 transform scale-95 opacity-0 rounded-sm">
-            <button onclick="closeProjectModal()" class="absolute top-4 right-4 md:top-6 md:right-6 p-2 text-neutral-400 hover:text-white transition-colors tracking-widest text-xs uppercase hover-grow magnetic-target z-50 bg-neutral-900 md:bg-transparent rounded-full md:rounded-none">
-                <span class="md:hidden font-bold leading-none w-4 h-4 flex items-center justify-center">✕</span>
-                <span class="hidden md:inline">[ CLOSE ✕ ]</span>
-            </button>
-            <div id="modal-content" class="space-y-6 md:space-y-8">
-                <!-- Dynamically loaded -->
-            </div>
+    <!-- Project Modal -->
+    <div id="modal-overlay" class="fixed inset-0 z-[999] flex justify-center items-center p-4 opacity-0 pointer-events-none transition-opacity duration-400" style="background:rgba(0,0,0,0.96); backdrop-filter:blur(8px);">
+        <div id="modal-box" class="border border-neutral-800 bg-neutral-950 max-w-4xl w-full max-h-[88vh] overflow-y-auto p-5 pt-14 md:p-10 md:pt-14 text-white relative scale-95 opacity-0 transition-all duration-400 rounded-sm">
+            <button onclick="closeModal()" class="absolute top-3 right-3 md:top-5 md:right-5 z-50 px-3 py-1.5 text-neutral-400 hover:text-white text-[10px] uppercase tracking-widest border border-neutral-800 hover:border-neutral-400 transition-all duration-200 bg-neutral-950">✕ CLOSE</button>
+            <div id="modal-content" class="space-y-6"></div>
         </div>
     </div>
 
-
-    <!-- COMPLETE LOGIC INTERACTIVITY SCRIPT -->
     <script>
-        // ----------------------------------------------------
-        // CONFIG & GLOBAL STATE
-        // ----------------------------------------------------
-        const state = {
-            activeSection: 'home',
-            mouse: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-            targetMouse: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-            cursor: { x: window.innerWidth / 2, y: window.innerHeight / 2, ringX: window.innerWidth / 2, ringY: window.innerHeight / 2 },
-            mobileMenuOpen: false
-        };
+    // ── DATA ──────────────────────────────────────────────────────────────
+    const projectData = {
+        'hr-assist': {
+            title: 'HR Assist Agentic AI System', badge: 'AGENTIC AI',
+            technologies: ['Python', 'MCP', 'FastMCP', 'Pydantic'],
+            description: 'An Agentic AI-powered HR automation platform for onboarding, leave handling, scheduling, and ticket management workflows.',
+            problem: 'HR teams spend significant time on repetitive onboarding, leave management, scheduling, and support tasks that can be automated through intelligent AI agents.',
+            architecture: 'Built using Model Context Protocol (MCP) with FastMCP tools and a modular backend architecture enabling autonomous workflow execution, schema validation, email automation, and scalable task orchestration.',
+            features: ['Autonomous AI-driven HR workflow execution.', 'MCP-based tools for backend orchestration.', 'Modular architecture with email automation and schema validation.'],
+            github: 'https://github.com/Kaushik-verse/-hr-assistant'
+        },
+        'speed-bump': {
+            title: 'Speed Bump Detection System', badge: 'COMPUTER VISION',
+            technologies: ['YOLOv8', 'OpenCV', 'Deep Learning'],
+            description: 'A real-time computer vision system for intelligent speed bump detection using multiple YOLOv8 variants.',
+            problem: 'Manual road inspection is inefficient and expensive, making automated detection essential for safer transportation systems.',
+            architecture: 'Uses annotated road datasets with multiple YOLOv8 models, optimized preprocessing pipelines, data augmentation, and real-time inference for accurate detection.',
+            features: ['Comparison of multiple YOLOv8 variants.', 'Real-time speed bump detection.', 'Optimized preprocessing and data augmentation.'],
+            github: 'https://github.com/Kaushik-verse/-Speed-bump-detection-v1'
+        },
+        'real-estate': {
+            title: 'Real Estate RAG Assistant', badge: 'RAG SYSTEM',
+            technologies: ['Generative AI', 'NLP', 'LangChain'],
+            description: 'A hybrid Retrieval-Augmented Generation system for intelligent querying of real estate documents.',
+            problem: 'Searching large real estate documents manually is time-consuming and fails to retrieve relevant contextual information.',
+            architecture: 'Implements hybrid retrieval combining semantic vector search with keyword retrieval, embedding pipelines, document chunking, and grounded LLM response generation.',
+            features: ['Hybrid semantic and keyword retrieval.', 'Embedding and document chunking pipeline.', 'Grounded LLM-powered contextual responses.'],
+            github: 'https://github.com/Kaushik-verse/hybrid-rag-assistant'
+        },
+        'pos-system': {
+            title: 'Fullstack POS System', badge: 'FULL STACK',
+            technologies: ['React', 'Spring Boot', 'MySQL'],
+            description: 'A full-stack point-of-sale system for inventory management, billing, sales tracking, and business analytics.',
+            problem: 'Retail businesses require a unified platform to efficiently manage inventory and sales operations.',
+            architecture: 'Built with a React frontend and Spring Boot backend integrated with a relational database for inventory, billing, and transaction management.',
+            features: ['Inventory management system.', 'Sales and billing module.', 'Business analytics dashboard.'],
+            github: 'https://github.com/Kaushik-verse/Fullstack-pos-system'
+        }
+    };
 
-        const projectDatabase = {
-            'hr-assist': {
-                title: 'HR Assist Agentic AI System',
-                badge: 'AGENTIC AI',
-                technologies: ['Python', 'MCP', 'FastMCP', 'Pydantic'],
-                description: 'An Agentic AI-powered HR automation platform for onboarding, leave handling, scheduling, and ticket management workflows.',
-                problem: 'HR teams spend significant time on repetitive onboarding, leave management, scheduling, and support tasks that can be automated through intelligent AI agents.',
-                architecture: 'Built using Model Context Protocol (MCP) with FastMCP tools and a modular backend architecture enabling autonomous workflow execution, schema validation, email automation, and scalable task orchestration.',
-                features: [
-                    'Autonomous AI-driven HR workflow execution.',
-                    'MCP-based tools for backend orchestration.',
-                    'Modular architecture with email automation and schema validation.'
-                ],
-                github: 'https://github.com/Kaushik-verse/-hr-assistant'
-            },
-            'speed-bump': {
-                title: 'Speed Bump Detection System',
-                badge: 'COMPUTER VISION',
-                technologies: ['YOLOv8', 'OpenCV', 'Deep Learning'],
-                description: 'A real-time computer vision system for intelligent speed bump detection using multiple YOLOv8 variants.',
-                problem: 'Manual road inspection is inefficient and expensive, making automated detection essential for safer and smarter transportation systems.',
-                architecture: 'Uses annotated road datasets with multiple YOLOv8 models, optimized preprocessing pipelines, data augmentation, and real-time inference for accurate detection.',
-                features: [
-                    'Comparison of multiple YOLOv8 variants.',
-                    'Real-time speed bump detection.',
-                    'Optimized preprocessing and data augmentation.'
-                ],
-                github: 'https://github.com/Kaushik-verse/-Speed-bump-detection-v1'
-            },
-            'real-estate': {
-                title: 'Real Estate RAG Assistant',
-                badge: 'RAG SYSTEM',
-                technologies: ['Generative AI', 'NLP', 'LangChain'],
-                description: 'A hybrid Retrieval-Augmented Generation system for intelligent querying of real estate documents.',
-                problem: 'Searching large real estate documents manually is time-consuming and often fails to retrieve relevant contextual information.',
-                architecture: 'Implements hybrid retrieval by combining semantic vector search with keyword retrieval, embedding pipelines, document chunking, and grounded LLM response generation.',
-                features: [
-                    'Hybrid semantic and keyword retrieval.',
-                    'Embedding and document chunking pipeline.',
-                    'Grounded LLM-powered contextual responses.'
-                ],
-                github: 'https://github.com/Kaushik-verse/hybrid-rag-assistant'
-            },
-            'pos-system': {
-                title: 'Fullstack POS System',
-                badge: 'FULL STACK',
-                technologies: ['React', 'Spring Boot', 'MySQL'],
-                description: 'A full-stack point-of-sale system for inventory management, billing, sales tracking, and business analytics.',
-                problem: 'Retail businesses require a unified platform to efficiently manage inventory and sales operations.',
-                architecture: 'Built with a React frontend and Spring Boot backend integrated with a relational database for inventory, billing, and transaction management.',
-                features: [
-                    'Inventory management.',
-                    'Sales and billing system.',
-                    'Business analytics dashboard.'
-                ],
-                github: 'https://github.com/Kaushik-verse/Fullstack-pos-system'
+    const repoNodes = [
+        { xR: 0.18, yR: 0.28, title: 'HR Assist Agentic AI', desc: 'Agentic AI platform for HR workflow automation using MCP.', lang: 'Python', link: 'https://github.com/Kaushik-verse/-hr-assistant' },
+        { xR: 0.50, yR: 0.18, title: 'Speed Bump Detection', desc: 'Real-time YOLOv8-based computer vision detection system.', lang: 'Python', link: 'https://github.com/Kaushik-verse/-Speed-bump-detection-v1' },
+        { xR: 0.78, yR: 0.35, title: 'Real Estate RAG', desc: 'Hybrid RAG system combining semantic and keyword retrieval.', lang: 'Python', link: 'https://github.com/Kaushik-verse/hybrid-rag-assistant' },
+        { xR: 0.35, yR: 0.72, title: 'Fullstack POS System', desc: 'Full-stack POS for inventory, billing, and analytics.', lang: 'Java', link: 'https://github.com/Kaushik-verse/Fullstack-pos-system' }
+    ];
+
+    // ── STATE ─────────────────────────────────────────────────────────────
+    let mobileOpen = false;
+    const mouse = { x: typeof window !== 'undefined' ? window.innerWidth/2 : 0, y: typeof window !== 'undefined' ? window.innerHeight/2 : 0 };
+    const cursor = { x: mouse.x, y: mouse.y, rx: mouse.x, ry: mouse.y };
+
+    // ── INIT ──────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        initCursor();
+        initNavScroll();
+        initReveal();
+        initHeroReveal();
+        initFluid();
+        initConstellation();
+        initAudio();
+        initMobileMenu();
+        initAnchorLinks();
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => openModal(card.dataset.project));
+        });
+    });
+
+    // ── CURSOR ────────────────────────────────────────────────────────────
+    function initCursor() {
+        // Only run for fine pointers (ignores touch devices like phones & ipads entirely)
+        if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
+        if (window.innerWidth < 768) return;
+
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        
+        // Show cursor elements now that we've confirmed fine pointer
+        if(dot && ring) {
+            dot.style.opacity = '1';
+            ring.style.opacity = '1';
+        } else {
+            return;
+        }
+
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+        (function tick() {
+            cursor.x += (mouse.x - cursor.x) * 0.22;
+            cursor.y += (mouse.y - cursor.y) * 0.22;
+            cursor.rx += (mouse.x - cursor.rx) * 0.10;
+            cursor.ry += (mouse.y - cursor.ry) * 0.10;
+            dot.style.left = cursor.x + 'px'; dot.style.top = cursor.y + 'px';
+            ring.style.left = cursor.rx + 'px'; ring.style.top = cursor.ry + 'px';
+            requestAnimationFrame(tick);
+        })();
+
+        document.querySelectorAll('a, button, .project-card, .skill-tag, #postcard-el').forEach(el => {
+            el.addEventListener('mouseenter', () => { ring.style.width='50px'; ring.style.height='50px'; ring.style.borderColor='var(--orange-glow)'; ring.style.backgroundColor='rgba(255,107,43,0.08)'; });
+            el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(255,255,255,0.5)'; ring.style.backgroundColor='transparent'; });
+        });
+        window.addEventListener('mousedown', () => { ring.style.width='18px'; ring.style.height='18px'; ring.style.backgroundColor='rgba(255,107,43,0.7)'; });
+        window.addEventListener('mouseup', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.backgroundColor='transparent'; });
+    }
+
+    // ── NAV SCROLL ────────────────────────────────────────────────────────
+    function initNavScroll() {
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (y > 80) {
+                nav.style.cssText = 'background:rgba(0,0,0,0.9); padding-top:0.9rem; padding-bottom:0.9rem; backdrop-filter:blur(12px); border-bottom:1px solid #0a0a0a;';
+            } else {
+                nav.style.cssText = 'background:transparent; padding-top:1.25rem; padding-bottom:1.25rem; backdrop-filter:none; border-bottom:none;';
             }
-        };
-
-        const repositoryNodes = [
-            { x: 18, y: 25, title: 'HR Assist Agentic AI System', desc: 'Agentic AI platform for HR workflow automation using MCP.', language: 'Python', stars: '--', link: 'https://github.com/Kaushik-verse/-hr-assistant' },
-            { x: 48, y: 18, title: 'Speed Bump Detection System', desc: 'Real-time YOLOv8-based computer vision speed bump detection.', language: 'Python', stars: '--', link: 'https://github.com/Kaushik-verse/-Speed-bump-detection-v1' },
-            { x: 78, y: 32, title: 'Real Estate RAG Assistant', desc: 'Hybrid RAG system combining semantic and keyword retrieval.', language: 'Python', stars: '--', link: 'https://github.com/Kaushik-verse/hybrid-rag-assistant' },
-            { x: 34, y: 72, title: 'Fullstack POS System', desc: 'Full-stack POS application for inventory, billing, and analytics.', language: 'Java', stars: '--', link: 'https://github.com/Kaushik-verse/Fullstack-pos-system' }
-        ];
-
-        // ----------------------------------------------------
-        // SYSTEM INIT & LISTENERS
-        // ----------------------------------------------------
-        window.addEventListener('DOMContentLoaded', () => {
-            initCursor();
-            initHeaderScroll();
-            initAnimations();
-            initFluidSimulation();
-            initConstellationCanvas();
-            initSkillsInteractivity();
-            initAnchorScrolling();
-            initAudioEngine();
-            
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.getAttribute('data-project');
-                    openProjectModal(id);
-                });
+            // Active link
+            let activeId = '';
+            document.querySelectorAll('section[id]').forEach(s => {
+                if (window.scrollY >= s.offsetTop - 220) activeId = s.id;
             });
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.toggle('active', l.getAttribute('href') === '#' + activeId);
+                l.style.color = l.getAttribute('href') === '#' + activeId ? 'var(--orange-glow)' : '';
+            });
+        });
+    }
 
-            document.getElementById('mobile-menu-trigger').addEventListener('click', toggleMobileMenu);
-            document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', toggleMobileMenu));
+    // ── HERO REVEAL ───────────────────────────────────────────────────────
+    function initHeroReveal() {
+        setTimeout(() => {
+            ['hs0','hs1','hs2'].forEach((id, i) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('revealed');
+                }, i * 180);
+            });
+        }, 150);
+    }
+
+    // ── SCROLL REVEALS ────────────────────────────────────────────────────
+    function initReveal() {
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal-element').forEach(el => obs.observe(el));
+    }
+
+    // ── FLUID BACKGROUND ──────────────────────────────────────────────────
+    function initFluid() {
+        const canvas = document.getElementById('fluid-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
+        const isMobile = window.innerWidth < 768;
+        renderer.setPixelRatio(isMobile ? 0.8 : Math.min(window.devicePixelRatio, 1.5));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+
+        const vert = `varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position,1.0); }`;
+        const frag = `
+            uniform vec2 u_res; uniform vec2 u_mouse; uniform float u_time;
+            varying vec2 vUv;
+            vec3 permute(vec3 x){return mod(((x*34.)+1.)*x,289.);}
+            float snoise(vec2 v){
+                const vec4 C=vec4(.211324865,.366025404,-.577350269,.024390244);
+                vec2 i=floor(v+dot(v,C.yy)), x0=v-i+dot(i,C.xx), i1=(x0.x>x0.y)?vec2(1,0):vec2(0,1);
+                vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1;
+                i=mod(i,289.); vec3 p=permute(permute(i.y+vec3(0,i1.y,1))+i.x+vec3(0,i1.x,1));
+                vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);
+                m=m*m; m=m*m;
+                vec3 x=2.*fract(p*C.www)-1., h=abs(x)-.5, a0=x-floor(x+.5);
+                vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+                return 130.*dot(m,g);
+            }
+            void main(){
+                vec2 st=gl_FragCoord.xy/u_res.xy; st.x*=u_res.x/u_res.y;
+                vec2 mn=u_mouse/u_res.xy; mn.x*=u_res.x/u_res.y;
+                float dist=distance(st,mn);
+                vec2 q=vec2(snoise(st+u_time*.03), snoise(st+vec2(1.5,3.2)+u_time*.04));
+                vec2 r=vec2(snoise(st+1.2*q+vec2(5.2,1.3)+u_time*.022), snoise(st+1.2*q+vec2(8.1,9.4)+u_time*.014));
+                float fd=smoothstep(.4,0.,dist)*.18;
+                float val=snoise(st+r*1.4+fd);
+                float v01=clamp(val*.5+.5,0.,1.);
+                
+                vec3 base=vec3(.018,.014,.010);
+                vec3 mid=vec3(.13,.10,.07);
+                vec3 warmOrange=vec3(.20,.08,.02);
+                
+                vec3 col=mix(base, mid, v01);
+                col=mix(col, warmOrange, clamp(v01*v01*.6,0.,1.));
+                
+                float mg=smoothstep(.3,0.,dist);
+                col+=vec3(.10,.04,.01)*mg;
+                
+                gl_FragColor=vec4(col,1.);
+            }
+        `;
+
+        const uniforms = {
+            u_res: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            u_mouse: { value: new THREE.Vector2(window.innerWidth/2, window.innerHeight/2) },
+            u_time: { value: 0 }
+        };
+        const mat = new THREE.ShaderMaterial({ vertexShader:vert, fragmentShader:frag, uniforms, depthWrite:false, depthTest:false });
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), mat));
+
+        let trackedX = window.innerWidth/2, trackedY = window.innerHeight/2;
+        if (!isMobile) {
+            window.addEventListener('mousemove', e => { trackedX=e.clientX; trackedY=window.innerHeight-e.clientY; });
+        }
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.u_res.value.set(window.innerWidth, window.innerHeight);
         });
 
-        // ----------------------------------------------------
-        // AUDIO EQUALIZER ENGINE
-        // ----------------------------------------------------
-        function initAudioEngine() {
-            const audio = document.getElementById('ambient-audio');
-            const toggleBtn = document.getElementById('sound-toggle');
-            const stateText = document.getElementById('sound-state');
-            const eqBars = document.querySelectorAll('.eq-bar');
-            
-            let isPlaying = false;
+        const clock = new THREE.Clock();
+        (function anim() {
+            uniforms.u_mouse.value.x += (trackedX - uniforms.u_mouse.value.x) * 0.04;
+            uniforms.u_mouse.value.y += (trackedY - uniforms.u_mouse.value.y) * 0.04;
+            uniforms.u_time.value = clock.getElapsedTime();
+            renderer.render(scene, camera);
+            requestAnimationFrame(anim);
+        })();
+    }
 
-            toggleBtn.addEventListener('click', () => {
-                if (isPlaying) {
-                    audio.pause();
-                    stateText.textContent = 'OFF';
-                    eqBars.forEach(bar => bar.classList.remove('active'));
+    // ── CONSTELLATION LAB ─────────────────────────────────────────────────
+    function initConstellation() {
+        const canvas = document.getElementById('constellation-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const panel = document.getElementById('star-panel');
+        const isMobile = window.innerWidth < 768;
+
+        function resize() {
+            const dpr = isMobile ? 1.5 : (window.devicePixelRatio || 1);
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            ctx.scale(dpr, dpr);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const nodes = repoNodes.map(n => ({
+            ...n,
+            x: 0, y: 0, scale: 1,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            floatPhase: Math.random() * Math.PI * 2
+        }));
+
+        let mx = -9999, my = -9999, lastHovered = null;
+
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mx = e.clientX - rect.left;
+            my = e.clientY - rect.top;
+        });
+        canvas.addEventListener('mouseleave', () => {
+            mx = -9999; my = -9999;
+            panel.style.opacity = '0';
+            panel.style.pointerEvents = 'none';
+            lastHovered = null;
+        });
+        canvas.addEventListener('click', e => {
+            const rect = canvas.getBoundingClientRect();
+            const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+            nodes.forEach(n => { if (Math.hypot(cx - n.x, cy - n.y) < 22) window.open(n.link, '_blank'); });
+        });
+
+        function W() { return canvas.getBoundingClientRect().width; }
+        function H() { return canvas.getBoundingClientRect().height; }
+
+        function draw() {
+            const w = W(), h = H();
+            ctx.clearRect(0, 0, w, h);
+            const t = Date.now() * 0.001;
+
+            nodes.forEach((n, i) => {
+                const bx = n.xR * w, by = n.yR * h;
+                const tx = bx + Math.sin(t * 0.6 + n.floatPhase) * 10;
+                const ty = by + Math.cos(t * 0.5 + n.floatPhase * 1.3) * 7;
+                const hovered = Math.hypot(mx - n.x, my - n.y) < 25;
+
+                if (hovered) {
+                    n.x += (tx + (mx - tx) * 0.15 - n.x) * 0.18;
+                    n.y += (ty + (my - ty) * 0.15 - n.y) * 0.18;
+                    n.scale += (2.5 - n.scale) * 0.14;
                 } else {
-                    audio.play().catch(e => console.log("Audio interaction requires user gesture:", e));
-                    stateText.textContent = 'ON';
-                    eqBars.forEach(bar => bar.classList.add('active'));
+                    n.x += (tx - n.x) * 0.08;
+                    n.y += (ty - n.y) * 0.08;
+                    n.scale += (1.0 - n.scale) * 0.09;
                 }
-                isPlaying = !isPlaying;
-            });
-        }
 
-
-        // ----------------------------------------------------
-        // ELEGANT CUSTOM CURSOR INTERACTION (DESKTOP ONLY)
-        // ----------------------------------------------------
-        function initCursor() {
-            if (window.innerWidth < 768) return; // Disable cursor override script on mobile viewports
-
-            const cursorDot = document.getElementById('custom-cursor-dot');
-            const cursorRing = document.getElementById('custom-cursor-ring');
-
-            window.addEventListener('mousemove', (e) => {
-                state.targetMouse.x = e.clientX;
-                state.targetMouse.y = e.clientY;
+                if (hovered && lastHovered !== i) {
+                    lastHovered = i;
+                    document.getElementById('sp-title').textContent = n.title;
+                    document.getElementById('sp-desc').textContent = n.desc;
+                    document.getElementById('sp-lang').textContent = n.lang;
+                    document.getElementById('sp-link').href = n.link;
+                    panel.style.opacity = '1';
+                    panel.style.pointerEvents = 'auto';
+                }
+                if (!hovered && lastHovered === i) {
+                    lastHovered = null;
+                    panel.style.opacity = '0';
+                    panel.style.pointerEvents = 'none';
+                }
             });
 
-            function updateCursor() {
-                state.cursor.x += (state.targetMouse.x - state.cursor.x) * 0.25;
-                state.cursor.y += (state.targetMouse.y - state.cursor.y) * 0.25;
-                state.cursor.ringX += (state.targetMouse.x - state.cursor.ringX) * 0.12;
-                state.cursor.ringY += (state.targetMouse.y - state.cursor.ringY) * 0.12;
-
-                cursorDot.style.left = `${state.cursor.x}px`;
-                cursorDot.style.top = `${state.cursor.y}px`;
-                cursorRing.style.left = `${state.cursor.ringX}px`;
-                cursorRing.style.top = `${state.cursor.ringY}px`;
-
-                requestAnimationFrame(updateCursor);
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                    const maxDist = Math.min(w, h) * 0.65;
+                    if (d < maxDist) {
+                        const nearHover = Math.hypot(mx - nodes[i].x, my - nodes[i].y) < 60 || Math.hypot(mx - nodes[j].x, my - nodes[j].y) < 60;
+                        const alpha = nearHover ? 0.18 * (1 - d/maxDist) : 0.05 * (1 - d/maxDist);
+                        ctx.strokeStyle = nearHover ? `rgba(255,107,43,${alpha*2.5})` : `rgba(255,255,255,${alpha})`;
+                        ctx.lineWidth = nearHover ? 1 : 0.5;
+                        ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
+                    }
+                }
             }
-            updateCursor();
 
-            const interactiveElements = document.querySelectorAll('.hover-grow, a, button, .project-card, .skill-tag, #postcard-element');
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursorRing.style.width = '55px';
-                    cursorRing.style.height = '55px';
-                    cursorRing.style.borderColor = 'rgba(255, 255, 255, 1)';
-                    cursorRing.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursorRing.style.width = '32px';
-                    cursorRing.style.height = '32px';
-                    cursorRing.style.borderColor = 'rgba(255, 255, 255, 0.5)';
-                    cursorRing.style.backgroundColor = 'transparent';
-                });
-            });
+            nodes.forEach((n, i) => {
+                const isHov = Math.hypot(mx - n.x, my - n.y) < 25;
+                const r = 4 * n.scale;
 
-            window.addEventListener('mousedown', () => {
-                cursorRing.style.width = '20px';
-                cursorRing.style.height = '20px';
-                cursorRing.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-            });
-            window.addEventListener('mouseup', () => {
-                cursorRing.style.width = '32px';
-                cursorRing.style.height = '32px';
-                cursorRing.style.backgroundColor = 'transparent';
-            });
-        }
+                if (n.scale > 1.2) {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, r * 2.8, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(255,107,43,${0.1 * (n.scale - 1)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, r * 1.8, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(255,107,43,${0.2 * (n.scale - 1)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
 
-
-        function initHeaderScroll() {
-            const navbar = document.getElementById('navbar');
-            let lastScrollY = window.scrollY;
-
-            window.addEventListener('scroll', () => {
-                const currentScrollY = window.scrollY;
-                if (currentScrollY > 100) {
-                    navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
-                    navbar.style.paddingTop = window.innerWidth < 768 ? '1rem' : '1.2rem';
-                    navbar.style.paddingBottom = window.innerWidth < 768 ? '1rem' : '1.2rem';
-                    navbar.style.backdropFilter = 'blur(10px)';
-                    navbar.style.borderBottom = '1px solid #121212';
+                const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r);
+                if (isHov) {
+                    grad.addColorStop(0, '#ffaa77');
+                    grad.addColorStop(1, '#ff6b2b');
                 } else {
-                    navbar.style.backgroundColor = 'transparent';
-                    navbar.style.paddingTop = window.innerWidth < 768 ? '1.5rem' : '2rem';
-                    navbar.style.paddingBottom = window.innerWidth < 768 ? '1.5rem' : '2rem';
-                    navbar.style.backdropFilter = 'none';
-                    navbar.style.borderBottom = 'none';
+                    grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+                    grad.addColorStop(1, 'rgba(200,200,200,0.5)');
                 }
+                ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+                ctx.fillStyle = grad; ctx.fill();
 
-                const sections = document.querySelectorAll('section');
-                let activeId = 'home';
-                sections.forEach(sec => {
-                    const secTop = sec.offsetTop - 200;
-                    if (currentScrollY >= secTop) {
-                        activeId = sec.getAttribute('id');
-                    }
-                });
-
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active', 'text-white');
-                    link.classList.add('text-neutral-400');
-                    if (link.getAttribute('href') === `#${activeId}`) {
-                        link.classList.add('active', 'text-white');
-                    }
-                });
-                lastScrollY = currentScrollY;
-            });
-        }
-
-        function initAnimations() {
-            setTimeout(() => {
-                document.getElementById('hero-subtitle-top').classList.remove('translate-y-full');
-                document.getElementById('hero-title-1').classList.remove('translate-y-full');
-                document.getElementById('hero-title-2').classList.remove('translate-y-full');
-            }, 200);
-
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.remove('opacity-0', 'translate-y-20');
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                    }
-                });
-            }, { threshold: 0.15 });
-
-            document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
-        }
-
-        function initFluidSimulation() {
-            const canvas = document.getElementById('fluid-canvas');
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false }); // reduced antialias
-            
-            // Adjust pixel ratio for mobile performance
-            renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-            const vertexShader = `
-                varying vec2 vUv;
-                void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
-            `;
-
-            const fragmentShader = `
-                uniform vec2 u_resolution;
-                uniform vec2 u_mouse;
-                uniform float u_time;
-                varying vec2 vUv;
-
-                vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
-                float snoise(vec2 v){
-                    const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-                    vec2 i  = floor(v + dot(v, C.yy));
-                    vec2 x0 = v -   i + dot(i, C.xx);
-                    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-                    vec4 x12 = x0.xyxy + C.xxzz;
-                    x12.xy -= i1;
-                    i = mod(i, 289.0);
-                    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
-                    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-                    m = m*m; m = m*m;
-                    vec3 x = 2.0 * fract(p * C.www) - 1.0;
-                    vec3 h = abs(x) - 0.5;
-                    vec3 a0 = x - floor(x + 0.5);
-                    vec3 g; g.x = a0.x * x0.x + h.x * x0.y; g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-                    return 130.0 * dot(m, g);
-                }
-
-                void main() {
-                    vec2 st = gl_FragCoord.xy / u_resolution.xy;
-                    st.x *= u_resolution.x / u_resolution.y;
-
-                    vec2 m_normalized = u_mouse / u_resolution.xy;
-                    m_normalized.x *= u_resolution.x / u_resolution.y;
-
-                    float dist = distance(st, m_normalized);
-
-                    vec2 q = vec2(0.0);
-                    q.x = snoise(st + u_time * 0.03);
-                    q.y = snoise(st + vec2(1.5, 3.2) + u_time * 0.04);
-                    vec2 r = vec2(0.0);
-                    r.x = snoise(st + 1.2 * q + vec2(5.2, 1.3) + u_time * 0.025);
-                    r.y = snoise(st + 1.2 * q + vec2(8.1, 9.4) + u_time * 0.015);
-
-                    float flowDistortion = smoothstep(0.4, 0.0, dist) * 0.2;
-                    float val = snoise(st + r * 1.5 + flowDistortion);
-
-                    vec3 baseDark = vec3(0.02, 0.02, 0.02);
-                    vec3 smokeGray = vec3(0.12, 0.12, 0.12);
-                    vec3 col = mix(baseDark, smokeGray, clamp(val * 0.5 + 0.5, 0.0, 1.0));
-
-                    float mouseGlow = smoothstep(0.35, 0.0, dist);
-                    col += vec3(mouseGlow * 0.08);
-                    gl_FragColor = vec4(col, 1.0);
-                }
-            `;
-
-            const uniforms = {
-                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                u_mouse: { value: new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2) },
-                u_time: { value: 0 }
-            };
-
-            const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, depthWrite: false, depthTest: false });
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-            scene.add(mesh);
-
-            let trackedMouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-            
-            if (window.innerWidth >= 768) {
-                window.addEventListener('mousemove', (e) => {
-                    trackedMouse.x = e.clientX;
-                    trackedMouse.y = window.innerHeight - e.clientY;
-                });
-            }
-
-            window.addEventListener('resize', () => {
-                renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 2));
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+                const labelAlpha = isHov ? 1 : 0.35;
+                ctx.fillStyle = isHov ? '#ff6b2b' : `rgba(255,255,255,${labelAlpha})`;
+                ctx.font = `${isMobile ? 9 : 10}px monospace`;
+                ctx.fillText(n.title, n.x + r + 5, n.y + 3.5);
             });
 
-            const clock = new THREE.Clock();
-            function animateFluid() {
-                if (window.innerWidth >= 768) {
-                    uniforms.u_mouse.value.x += (trackedMouse.x - uniforms.u_mouse.value.x) * 0.05;
-                    uniforms.u_mouse.value.y += (trackedMouse.y - uniforms.u_mouse.value.y) * 0.05;
-                }
-                uniforms.u_time.value = clock.getElapsedTime();
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateFluid);
-            }
-            animateFluid();
+            requestAnimationFrame(draw);
         }
+        draw();
+    }
 
-        function initSkillsInteractivity() {
-            document.querySelectorAll('.skill-tag').forEach(tag => {
-                // Ignore hover effects on touch devices essentially
-                if (window.innerWidth < 768) return; 
-                
-                tag.addEventListener('mouseenter', () => {
-                    tag.style.transform = 'scale(1.05) translateZ(10px)';
-                    tag.style.letterSpacing = '0.15em';
-                    tag.parentNode.querySelectorAll('.skill-tag').forEach(sib => {
-                        if (sib !== tag) { sib.style.opacity = '0.4'; sib.style.transform = 'scale(0.95)'; }
-                    });
-                });
-                tag.addEventListener('mouseleave', () => {
-                    tag.style.transform = 'none';
-                    tag.style.letterSpacing = 'normal';
-                    tag.parentNode.querySelectorAll('.skill-tag').forEach(sib => { sib.style.opacity = '1'; sib.style.transform = 'none'; });
-                });
-            });
-        }
+    // ── AUDIO ─────────────────────────────────────────────────────────────
+    function initAudio() {
+        const audio = document.getElementById('ambient-audio');
+        const btn = document.getElementById('sound-toggle');
+        const state = document.getElementById('sound-state');
+        const bars = document.querySelectorAll('.eq-bar');
+        let playing = false;
+        btn.addEventListener('click', () => {
+            if (playing) { audio.pause(); state.textContent='OFF'; bars.forEach(b=>b.classList.remove('active')); }
+            else { audio.play().catch(()=>{}); state.textContent='ON'; bars.forEach(b=>b.classList.add('active')); }
+            playing = !playing;
+        });
+    }
 
-        // DESKTOP ONLY Constellation Engine
-        function initConstellationCanvas() {
-            if (window.innerWidth < 768) return; // Prevent loop execution on hidden sections
-            
-            const canvas = document.getElementById('constellation-canvas');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const panel = document.getElementById('star-data-panel');
-            
-            function resizeCanvas() {
-                const dpr = window.devicePixelRatio || 1;
-                const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width * dpr;
-                canvas.height = rect.height * dpr;
-                ctx.scale(dpr, dpr);
-            }
-            resizeCanvas();
-            window.addEventListener('resize', () => {
-                if(window.innerWidth >= 768) resizeCanvas();
-            });
+    // ── MOBILE MENU ───────────────────────────────────────────────────────
+    function initMobileMenu() {
+        const btn = document.getElementById('mob-trigger');
+        const menu = document.getElementById('mobile-menu');
+        const l1 = document.getElementById('ml1');
+        const l2 = document.getElementById('ml2');
 
-            let mouseX = -1000, mouseY = -1000;
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                mouseX = e.clientX - rect.left;
-                mouseY = e.clientY - rect.top;
-            });
-            canvas.addEventListener('mouseleave', () => {
-                mouseX = -1000; mouseY = -1000;
-                panel.classList.remove('opacity-100', 'translate-y-0');
-                panel.classList.add('opacity-0', 'translate-y-4');
-                panel.classList.add('pointer-events-none');
-            });
-
-            const nodes = repositoryNodes.map(n => ({ xRatio: n.x / 100, yRatio: n.y / 100, x: 0, y: 0, baseX: 0, baseY: 0, radius: 4, ...n, activeScale: 1 }));
-
-            canvas.addEventListener('click', () => {
-                const hovered = nodes.find(n => Math.hypot(mouseX - n.x, mouseY - n.y) < 18);
-                if (hovered) window.open(hovered.link, '_blank');
-            });
-
-            function drawConstellation() {
-                if (window.innerWidth < 768) return requestAnimationFrame(drawConstellation); // Halt rendering
-                
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                nodes.forEach(node => {
-                    node.baseX = node.xRatio * canvas.getBoundingClientRect().width;
-                    node.baseY = node.yRatio * canvas.getBoundingClientRect().height;
-
-                    const t = Date.now() * 0.001;
-                    const targetX = node.baseX + Math.sin(t + node.xRatio * 10) * 8;
-                    const targetY = node.baseY + Math.cos(t + node.yRatio * 10) * 8;
-
-                    if (Math.hypot(mouseX - targetX, mouseY - targetY) < 120) {
-                        node.x += (targetX + (mouseX - targetX) * 0.25 - node.x) * 0.2;
-                        node.y += (targetY + (mouseY - targetY) * 0.25 - node.y) * 0.2;
-                        node.activeScale += (2.2 - node.activeScale) * 0.15;
-                    } else {
-                        node.x += (targetX - node.x) * 0.1;
-                        node.y += (targetY - node.y) * 0.1;
-                        node.activeScale += (1.0 - node.activeScale) * 0.1;
-                    }
-                });
-
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.lineWidth = 1;
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-                        if (dist < 200) {
-                            if (Math.hypot(mouseX - nodes[i].x, mouseY - nodes[i].y) < 120 || Math.hypot(mouseX - nodes[j].x, mouseY - nodes[j].y) < 120) {
-                                ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (1 - dist / 200)})`;
-                            } else {
-                                ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 * (1 - dist / 200)})`;
-                            }
-                            ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
-                        }
-                    }
-                }
-
-                let selected = null;
-                nodes.forEach(node => {
-                    const isHovered = Math.hypot(mouseX - node.x, mouseY - node.y) < 18;
-                    if (isHovered) selected = node;
-
-                    ctx.fillStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.7)';
-                    ctx.beginPath(); ctx.arc(node.x, node.y, node.radius * node.activeScale, 0, Math.PI * 2); ctx.fill();
-
-                    if (node.activeScale > 1) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (node.activeScale - 1)})`;
-                        ctx.beginPath(); ctx.arc(node.x, node.y, node.radius * node.activeScale * 3.5, 0, Math.PI * 2); ctx.stroke();
-                    }
-                    ctx.fillStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.3)';
-                    ctx.font = '10px monospace'; ctx.fillText(node.title, node.x + 12, node.y + 4);
-                });
-
-                if (selected) {
-                    document.getElementById('star-repo-title').textContent = selected.title;
-                    document.getElementById('star-repo-desc').textContent = selected.desc;
-                    document.getElementById('star-repo-language').textContent = selected.language;
-                    document.getElementById('star-repo-stars').textContent = `STARS: ${selected.stars}`;
-                    document.getElementById('star-repo-link').setAttribute('href', selected.link);
-
-                    panel.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-                    panel.classList.add('opacity-100', 'translate-y-0');
-                }
-                requestAnimationFrame(drawConstellation);
-            }
-            drawConstellation();
-        }
-
-        function openProjectModal(projectId) {
-            const data = projectDatabase[projectId];
-            if (!data) return;
-
-            let featuresHTML = data.features.map(feat => `<li class="flex items-start gap-3"><span class="text-white mt-1 shrink-0">▪</span> <span class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed">${feat}</span></li>`).join('');
-            let techsHTML = data.technologies.map(tech => `<span class="text-[10px] sm:text-xs font-mono border border-neutral-800 px-3 py-1.5 bg-black text-neutral-300">${tech}</span>`).join('');
-
-            document.getElementById('modal-content').innerHTML = `
-                <div class="border-b border-neutral-950 pb-6 md:pb-8 space-y-3 md:space-y-4">
-                    <span class="text-[10px] md:text-xs bg-white text-black font-extrabold px-3 py-1 tracking-widest uppercase font-mono inline-block">${data.badge}</span>
-                    <h3 class="text-2xl sm:text-3xl md:text-5xl font-heading font-extrabold tracking-tight mt-4 leading-tight">${data.title}</h3>
-                    <p class="text-neutral-300 text-sm md:text-lg font-light leading-relaxed">${data.description}</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 pt-4">
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <h4 class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono break-words">[ 01. INTENT & PROBLEM ]</h4>
-                            <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed">${data.problem}</p>
-                        </div>
-                        <div class="space-y-2">
-                            <h4 class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono break-words">[ 02. ARCHITECTURAL FLOW ]</h4>
-                            <p class="text-neutral-400 text-xs sm:text-sm font-light leading-relaxed">${data.architecture}</p>
-                        </div>
-                    </div>
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <h4 class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono break-words">[ 03. ENGINEERING MILESTONES ]</h4>
-                            <ul class="space-y-3">${featuresHTML}</ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="space-y-4 pt-8 border-t border-neutral-900">
-                    <h4 class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-400 font-mono break-words">[ INTEGRATED ENGINE TOOLING ]</h4>
-                    <div class="flex flex-wrap gap-2.5">${techsHTML}</div>
-                </div>
-                <div class="flex flex-col sm:flex-row flex-wrap gap-4 pt-10 md:pt-12">
-                    <a href="${data.github}" target="_blank" class="px-6 md:px-8 py-4 border border-white text-black bg-white hover:bg-black hover:text-white transition-all duration-300 text-[10px] md:text-xs font-bold tracking-widest uppercase text-center w-full sm:w-auto hover-grow magnetic-target">NAVIGATE CODEBASE ↗</a>
-                    <button onclick="closeProjectModal()" class="px-6 md:px-8 py-4 border border-neutral-800 text-white hover:border-white transition-all duration-300 text-[10px] md:text-xs font-bold tracking-widest uppercase text-center w-full sm:w-auto hover-grow magnetic-target">DISMISS BLUEPRINT</button>
-                </div>
-            `;
-
-            const overlay = document.getElementById('project-modal-overlay');
-            const container = document.getElementById('project-modal-container');
-            overlay.classList.remove('pointer-events-none', 'opacity-0');
-            container.classList.remove('scale-95', 'opacity-0');
-            overlay.classList.add('opacity-100');
-            container.classList.add('scale-100', 'opacity-100');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeProjectModal() {
-            const overlay = document.getElementById('project-modal-overlay');
-            const container = document.getElementById('project-modal-container');
-            overlay.classList.remove('opacity-100');
-            container.classList.remove('scale-100', 'opacity-100');
-            overlay.classList.add('pointer-events-none', 'opacity-0');
-            container.classList.add('scale-95', 'opacity-0');
-            document.body.style.overflow = 'auto';
-        }
-
-        function flipPostcard() {
-            document.getElementById('postcard-element').classList.toggle('rotate-y-180');
-        }
-
-        function copyToClipboard(text) {
-            const tempInput = document.createElement('input');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
-            const alertBox = document.getElementById('custom-alert');
-            alertBox.classList.remove('hidden');
-            setTimeout(() => {
-                alertBox.classList.remove('opacity-0', 'translate-y-[-20px]');
-                alertBox.classList.add('opacity-100', 'translate-y-0');
-            }, 50);
-            setTimeout(() => {
-                alertBox.classList.remove('opacity-100', 'translate-y-0');
-                alertBox.classList.add('opacity-0', 'translate-y-[-20px]');
-                setTimeout(() => alertBox.classList.add('hidden'), 500);
-            }, 3000);
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const l1 = document.getElementById('mob-line-1');
-            const l2 = document.getElementById('mob-line-2');
-            
-            state.mobileMenuOpen = !state.mobileMenuOpen;
-            if (state.mobileMenuOpen) {
-                menu.classList.remove('pointer-events-none', 'opacity-0');
-                menu.classList.add('opacity-100', 'pointer-events-auto');
-                l1.style.transform = 'translateY(6px) rotate(45deg)';
-                l2.style.transform = 'scaleX(0)';
+        function toggle() {
+            mobileOpen = !mobileOpen;
+            if (mobileOpen) {
+                menu.classList.add('open');
+                l1.style.cssText = 'transform:translateY(5px) rotate(45deg); background:var(--orange-glow);';
+                l2.style.cssText = 'transform:scaleX(0);';
                 document.body.style.overflow = 'hidden';
             } else {
-                menu.classList.remove('pointer-events-auto', 'opacity-100');
-                menu.classList.add('pointer-events-none', 'opacity-0');
-                l1.style.transform = 'none';
-                l2.style.transform = 'none';
-                document.body.style.overflow = 'auto';
+                menu.classList.remove('open');
+                l1.style.cssText = '';
+                l2.style.cssText = '';
+                document.body.style.overflow = '';
             }
         }
 
-        function initAnchorScrolling() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            if (state.mobileMenuOpen) {
-                                toggleMobileMenu();
-                                setTimeout(() => {
-                                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                }, 300);
-                            } else {
-                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        }
-                    }
-                });
+        btn.addEventListener('click', toggle);
+        document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => { if(mobileOpen) toggle(); }));
+    }
+
+    // ── ANCHOR LINKS ──────────────────────────────────────────────────────
+    function initAnchorLinks() {
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                if (mobileOpen) {
+                    document.getElementById('mobile-menu').classList.remove('open');
+                    document.getElementById('ml1').style.cssText = '';
+                    document.getElementById('ml2').style.cssText = '';
+                    document.body.style.overflow = '';
+                    mobileOpen = false;
+                    setTimeout(() => target.scrollIntoView({ behavior:'smooth', block:'start' }), 320);
+                } else {
+                    target.scrollIntoView({ behavior:'smooth', block:'start' });
+                }
             });
-        }
+        });
+    }
+
+    // ── MODAL ─────────────────────────────────────────────────────────────
+    function openModal(id) {
+        const d = projectData[id]; if (!d) return;
+        const feats = d.features.map(f => `<li class="flex gap-2.5 items-start"><span style="color:var(--orange-glow)">▪</span><span class="text-neutral-400 text-xs leading-relaxed">${f}</span></li>`).join('');
+        const techs = d.technologies.map(t => `<span class="text-[9px] font-mono border border-neutral-800 px-2.5 py-1 bg-black text-neutral-300">${t}</span>`).join('');
+        document.getElementById('modal-content').innerHTML = `
+            <div class="border-b border-neutral-900 pb-6 space-y-2">
+                <span class="text-[9px] font-bold px-2.5 py-1 tracking-widest uppercase font-mono inline-block" style="background:var(--orange-glow);color:#000;">${d.badge}</span>
+                <h3 class="text-2xl sm:text-4xl font-heading font-extrabold tracking-tight mt-3 leading-tight">${d.title}</h3>
+                <p class="text-neutral-300 text-sm font-light leading-relaxed">${d.description}</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div class="space-y-5">
+                    <div>
+                        <h4 class="text-[9px] uppercase tracking-widest text-neutral-400 font-mono mb-2">[ 01. PROBLEM ]</h4>
+                        <p class="text-neutral-400 text-xs leading-relaxed">${d.problem}</p>
+                    </div>
+                    <div>
+                        <h4 class="text-[9px] uppercase tracking-widest text-neutral-400 font-mono mb-2">[ 02. ARCHITECTURE ]</h4>
+                        <p class="text-neutral-400 text-xs leading-relaxed">${d.architecture}</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-[9px] uppercase tracking-widest text-neutral-400 font-mono mb-2">[ 03. MILESTONES ]</h4>
+                    <ul class="space-y-2">${feats}</ul>
+                </div>
+            </div>
+            <div class="space-y-3 pt-6 border-t border-neutral-900">
+                <h4 class="text-[9px] uppercase tracking-widest text-neutral-400 font-mono">[ STACK ]</h4>
+                <div class="flex flex-wrap gap-2">${techs}</div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 pt-8">
+                <a href="${d.github}" target="_blank" class="px-6 py-3.5 text-[9px] font-bold tracking-widest uppercase text-center transition-all duration-200" style="background:var(--orange-glow);color:#000;" onmouseover="this.style.background='#000';this.style.color='var(--orange-glow)';this.style.border='1px solid var(--orange-glow)';" onmouseout="this.style.background='var(--orange-glow)';this.style.color='#000';this.style.border='none';">NAVIGATE CODEBASE ↗</a>
+                <button onclick="closeModal()" class="px-6 py-3.5 border border-neutral-700 text-white text-[9px] font-bold tracking-widest uppercase hover:border-white transition-all duration-200">DISMISS</button>
+            </div>
+        `;
+        const ov = document.getElementById('modal-overlay');
+        const box = document.getElementById('modal-box');
+        ov.classList.remove('pointer-events-none');
+        ov.style.opacity = '1';
+        ov.style.pointerEvents = 'auto';
+        box.style.transform = 'scale(1)';
+        box.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        const ov = document.getElementById('modal-overlay');
+        const box = document.getElementById('modal-box');
+        ov.style.opacity = '0';
+        ov.style.pointerEvents = 'none';
+        box.style.transform = 'scale(0.95)';
+        box.style.opacity = '0';
+        document.body.style.overflow = '';
+    }
+
+    // ── POSTCARD ──────────────────────────────────────────────────────────
+    function flipPostcard() { document.getElementById('postcard-el').classList.toggle('rotate-y-180'); }
+
+    // ── CLIPBOARD ─────────────────────────────────────────────────────────
+    function copyToClipboard(text) {
+        navigator.clipboard ? navigator.clipboard.writeText(text) : (() => { const i=document.createElement('input'); i.value=text; document.body.appendChild(i); i.select(); document.execCommand('copy'); document.body.removeChild(i); })();
+        const t = document.getElementById('toast');
+        t.classList.remove('hidden');
+        requestAnimationFrame(() => { t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+        setTimeout(() => {
+            t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(-20px)';
+            setTimeout(() => t.classList.add('hidden'), 500);
+        }, 2500);
+    }
     </script>
 </body>
 </html>
