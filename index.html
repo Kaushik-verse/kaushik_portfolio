@@ -216,7 +216,7 @@
     <div class="fixed inset-0 pointer-events-none" style="background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.75) 100%); z-index:-10;"></div>
 
     <!-- Grain overlay -->
-    <div class="fixed inset-0 pointer-events-none" style="z-index:99; background-image:url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E\");"></div>
+    <div class="fixed inset-0 pointer-events-none" style="z-index:99; background-image:url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E&quot;);"></div>
 
     <!-- Editorial lines -->
     <div class="editorial-line w-[1px] h-full left-[8vw] top-0 hidden lg:block"></div>
@@ -243,6 +243,7 @@
             <a href="#work" class="nav-link relative py-1 transition-colors duration-200">Projects</a>
             <a href="#skills" class="nav-link relative py-1 transition-colors duration-200">Skills</a>
             <a href="#lab" class="nav-link relative py-1 transition-colors duration-200">Lab</a>
+            <a href="#articles" class="nav-link relative py-1 transition-colors duration-200">Articles</a>
             <a href="#contact" class="nav-link relative py-1 transition-colors duration-200">Contact</a>
             <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border px-3 py-1.5 text-[10px] text-white transition-all duration-250 rounded-sm" style="border-color:rgba(255,107,43,0.4);" onmouseover="this.style.backgroundColor='var(--orange-glow)';this.style.color='#000';this.style.borderColor='var(--orange-glow)';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#fff';this.style.borderColor='rgba(255,107,43,0.4)';">Resume ↗</a>
         </nav>
@@ -263,6 +264,8 @@
             <a href="#about" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">About</a>
             <a href="#work" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Projects</a>
             <a href="#skills" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Skills</a>
+            <a href="#lab" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Lab</a>
+            <a href="#articles" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Articles</a>
             <a href="#contact" class="mob-link text-neutral-500 hover:text-white transition-colors duration-200 py-2 block">Contact</a>
         </nav>
         <a href="https://drive.google.com/file/d/1eqsorUQ5gtvVCAlJDWQWOU-4TNboHCTx/view?usp=sharing" target="_blank" class="border border-white px-8 py-4 uppercase text-xs tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 rounded-sm">Resume ↗</a>
@@ -558,9 +561,65 @@
             </div>
         </section>
 
-        <!-- 6. CONTACT -->
+        <!-- 6. ARTICLES / EDITORIALS -->
+        <section id="articles" class="py-16 md:py-28 border-t border-neutral-900 relative">
+            <!-- Background decorative text -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden pointer-events-none opacity-[0.02] flex items-center justify-center z-0">
+                <span class="font-heading text-[18vw] whitespace-nowrap leading-none font-extrabold tracking-tighter">THOUGHTS</span>
+            </div>
+
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-3">
+                    <div class="w-full">
+                        <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-3">05 / EDITORIAL ARCHIVE</p>
+                        <h2 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight leading-tight">PUBLISHED WRITINGS</h2>
+                    </div>
+                    <p class="text-[9px] text-neutral-400 uppercase tracking-widest font-mono shrink-0">[ EXTERNAL TRANSMISSIONS ]</p>
+                </div>
+
+                <div class="flex flex-col border-t border-neutral-900">
+                    <!-- Article 1 -->
+                    <a href="https://medium.com/@chundurisaikaushik/the-day-human-mistakes-became-luxury-goods-d65fcf31033a" target="_blank" class="article-row group block border-b border-neutral-900 py-8 md:py-12 transition-all duration-500 hover:bg-neutral-950 relative overflow-hidden">
+                        <div class="absolute left-0 top-0 w-[3px] h-full bg-[var(--orange-glow)] scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center px-4 md:px-8">
+                            <div class="text-[10px] font-mono tracking-widest text-neutral-500 shrink-0 md:w-32">
+                                [ 01. MEDIUM ]
+                                <div class="mt-1 md:mt-2 text-neutral-600 hidden md:block">2026</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold tracking-tight mb-3 group-hover:text-[var(--orange-glow)] transition-colors duration-300">The Day Human Mistakes Became Luxury Goods</h3>
+                                <p class="text-neutral-400 text-xs md:text-sm font-light max-w-2xl leading-relaxed">Exploring the premium value of human imperfection and unpredictability in an age increasingly dominated by flawless, deterministic automation.</p>
+                            </div>
+                            <div class="shrink-0 hidden sm:flex items-center justify-center w-12 h-12 border border-neutral-800 rounded-full group-hover:border-[var(--orange-glow)] transition-colors duration-300 -rotate-45 group-hover:rotate-0">
+                                <span class="text-lg text-neutral-500 group-hover:text-[var(--orange-glow)] transition-colors duration-300">→</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Article 2 -->
+                    <a href="https://medium.com/@chundurisaikaushik/the-2-rule-why-we-trust-ai-advice-but-reject-ai-decisions-eb5e6d6acb60" target="_blank" class="article-row group block border-b border-neutral-900 py-8 md:py-12 transition-all duration-500 hover:bg-neutral-950 relative overflow-hidden">
+                        <div class="absolute left-0 top-0 w-[3px] h-full bg-[var(--orange-glow)] scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center px-4 md:px-8">
+                            <div class="text-[10px] font-mono tracking-widest text-neutral-500 shrink-0 md:w-32">
+                                [ 02. MEDIUM ]
+                                <div class="mt-1 md:mt-2 text-neutral-600 hidden md:block">2026</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold tracking-tight mb-3 group-hover:text-[var(--orange-glow)] transition-colors duration-300">The 2% Rule: Why We Trust AI Advice But Reject AI Decisions</h3>
+                                <p class="text-neutral-400 text-xs md:text-sm font-light max-w-2xl leading-relaxed">Analyzing the psychological threshold of AI delegation, the illusion of control, and why human autonomy remains paramount in critical decision-making.</p>
+                            </div>
+                            <div class="shrink-0 hidden sm:flex items-center justify-center w-12 h-12 border border-neutral-800 rounded-full group-hover:border-[var(--orange-glow)] transition-colors duration-300 -rotate-45 group-hover:rotate-0">
+                                <span class="text-lg text-neutral-500 group-hover:text-[var(--orange-glow)] transition-colors duration-300">→</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CONTACT -->
         <section id="contact" class="py-16 md:py-28 border-t border-neutral-900">
-            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">05 / CONTACT PIPELINE</p>
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">06 / CONTACT PIPELINE</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14">
                 <div class="space-y-5">
@@ -602,9 +661,9 @@
             </div>
         </section>
 
-        <!-- 7. POSTCARD -->
+        <!-- 8. POSTCARD -->
         <section class="py-16 md:py-28 border-t border-neutral-900 flex flex-col justify-center items-center relative overflow-hidden">
-            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">06 / A PERSONAL NOTE</p>
+            <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-neutral-400 mb-10 md:mb-14">07 / A PERSONAL NOTE</p>
 
             <div class="perspective-1000 w-full max-w-xl" style="height:clamp(340px, 60vw, 480px);">
                 <div id="postcard-el" class="w-full h-full transform-style-3d transition-transform duration-[1.1s] ease-out relative select-none cursor-pointer" onclick="flipPostcard()">
