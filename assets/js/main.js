@@ -9,13 +9,13 @@
 // ── DATA ──────────────────────────────────────────────────────────────
 const projectData = {
     'hr-assist': { scene: 'hr',
-        title: 'HR Assist Agentic AI System', badge: 'AGENTIC AI',
-        technologies: ['Python', 'MCP', 'FastMCP', 'Pydantic'],
-        description: 'An Agentic AI-powered HR automation platform for onboarding, leave handling, scheduling, and ticket management workflows.',
-        problem: 'HR teams spend significant time on repetitive onboarding, leave management, scheduling, and support tasks that can be automated through intelligent AI agents.',
-        architecture: 'Built using Model Context Protocol (MCP) with FastMCP tools and a modular backend architecture enabling autonomous workflow execution, schema validation, email automation, and scalable task orchestration.',
-        features: ['Autonomous AI-driven HR workflow execution.', 'MCP-based tools for backend orchestration.', 'Modular architecture with email automation and schema validation.'],
-        github: 'https://github.com/Kaushik-verse/-hr-assistant'
+        title: 'Vidura — Agentic HR Assistant', badge: 'AGENTIC AI · MCP',
+        technologies: ['Python', 'LangChain', 'Groq gpt-oss-120b', 'FastMCP', 'Pydantic', 'Streamlit', 'SQLite', 'pytest', 'GitHub Actions'],
+        description: 'An agentic HR assistant that turns plain-language requests into validated, permission-checked actions for leave, tickets, onboarding, hiring and analytics, through a chat agent, a dashboard or the Model Context Protocol.',
+        problem: 'HR teams lose hours to repetitive leave, onboarding, ticket and scheduling work, and naive LLM agents are unsafe for it: permissions written only into a prompt can be talked around.',
+        architecture: 'A Streamlit UI, a LangChain tool-calling agent on Groq and a FastMCP server all share one service layer that enforces role-based access, Pydantic validation, business rules and an audit log over SQLite. Agent tools are bound to the signed-in user, so the model can never choose who it acts as.',
+        features: ['Role-based access enforced in code; prompt-injection attempts to call admin tools are refused.', 'Leave balances, overlap checks and department-aware team-coverage warnings.', 'One-step onboarding that opens IT, payroll and orientation tickets in a single transaction.', 'Same 19 tools exposed over MCP; 36 tests and CI on every push.'],
+        github: 'https://github.com/Kaushik-verse/vidura-agentic-hr-assistant'
     },
     'opspilot': { scene: 'ops',
         title: 'OpsPilot — AI On-Call Engineer', badge: 'AIOPS · AGENTS',
@@ -672,7 +672,7 @@ const ISO_SCENES = {
         const g = isoScene(14); let o = '';
         o += g.box(0, 0, -0.3, 8, 8, 0.3, C.slab);
         for (let i = 1; i < 8; i++) { o += g.line([i, 0, 0], [i, 8, 0], GRID) + g.line([0, i, 0], [8, i, 0], GRID); }
-        const tools = [[0.6, 0.6, 'MAIL'], [5.4, 0.6, 'CAL'], [0.6, 5.4, 'TICKET'], [5.4, 5.4, 'LEAVE']];
+        const tools = [[0.6, 0.6, 'HIRE'], [5.4, 0.6, 'CAL'], [0.6, 5.4, 'TICKET'], [5.4, 5.4, 'LEAVE']];
         tools.forEach(([x, y], i) => {
             const a = [4, 4, 0.05], c = [x + 1, y + 1, 0.05];
             o += g.line(a, c, 'class="flow" stroke="#ff6b2b" stroke-width="1" opacity=".7"');
