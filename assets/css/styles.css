@@ -397,7 +397,11 @@ html { scroll-behavior: smooth; }
     .pc-beam { width:5cqw; }
     .pc-city { left:-8%; right:-8%; height:60%; }
     .pc-caption { font-size:2.4cqw; padding:2.4cqw 3.4cqw; }
-    .pc-turn { font-size:5cqw; right:4cqw; top:auto; bottom:9cqw; }
+    .pc-turn { font-size:4.6cqw; right:4cqw; top:4cqw; bottom:auto; }
+    .pc-greet { top:15%; }
+    .pc-paper::after { display:none; }
+    .pc-stamp-in .iso { inset:32% 8% 20%; }
+    .pc-stamp-val { position:relative; z-index:1; }
     .pc-back { padding:2cqw; }
     .pc-paper { padding:4.5cqw 5cqw 4cqw; }
     .pc-head { font-size:2.6cqw; padding-bottom:2.6cqw; }
