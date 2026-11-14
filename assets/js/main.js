@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScramble();
     initCardSpotlight();
     initMagnetic();
-    initCountUp();
     initPostcard();
     initPostcardActions();
 
@@ -883,25 +882,6 @@ function initMagnetic() {
         });
         host.addEventListener('pointerleave', () => { el.style.transform = ''; });
     });
-}
-
-// ── CGPA COUNT-UP ─────────────────────────────────────────────────────
-function initCountUp() {
-    const el = document.getElementById('cgpa');
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const to = parseFloat(el.dataset.to);
-    const io = new IntersectionObserver(([e]) => {
-        if (!e.isIntersecting) return;
-        io.disconnect();
-        const t0 = performance.now(), dur = 1400;
-        (function tick(now) {
-            const p = Math.min(1, (now - t0) / dur), k = 1 - Math.pow(1 - p, 4);
-            el.textContent = (to * k).toFixed(2);
-            if (p < 1) requestAnimationFrame(tick);
-        })(t0);
-    }, { threshold: 0.6 });
-    el.textContent = '0.00';
-    io.observe(el);
 }
 
 // ── POSTCARD ──────────────────────────────────────────────────────────
