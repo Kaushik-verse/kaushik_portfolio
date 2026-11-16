@@ -34,7 +34,7 @@ const projectData = {
         architecture: 'Three retrieval channels (BM25, dense embeddings, SPLADE learned sparse) are fused with z-score fusion weighted per query by a router. A cross-encoder rereads the top 20 and its score is blended 50/50 with the fusion score, then MMR adds diversity. A confidence gate abstains on weak evidence; answers are checked sentence by sentence and figure by figure against their sources. Twelve techniques can be compared in a built-in Arena and Benchmark.',
         features: ['0.744 nDCG@10 on BEIR SciFact, +11% over BM25 and above the published BM25 + reranker (0.688).', '1.00 MRR on a held-out property question set written before any tuning.', 'Found that a web-trained reranker hurts on unfamiliar text (0.742 → 0.687); a 50/50 score blend keeps the gain without the loss.', 'Conflict radar (brochure vs agreement), abstains instead of guessing, three-model council mode.', '49 offline tests, CI on Python 3.11 and 3.13, reproducible benchmarks.'],
         github: 'https://github.com/Kaushik-verse/satyori-hybrid-rag',
-        demo: 'https://hybrid-rag-assistant-dxrpvnpurkiwixnbsntq3c.streamlit.app/'
+        demo: 'https://satyori.streamlit.app/'
     },
     'pos-system': { scene: 'pos',
         title: 'Fullstack POS System', badge: 'FULL STACK',
