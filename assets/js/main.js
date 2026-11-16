@@ -15,7 +15,8 @@ const projectData = {
         problem: 'HR teams lose hours to repetitive leave, onboarding, ticket and scheduling work, and naive LLM agents are unsafe for it: permissions written only into a prompt can be talked around.',
         architecture: 'A Streamlit UI, a LangChain tool-calling agent on Groq and a FastMCP server all share one service layer that enforces role-based access, Pydantic validation, business rules and an audit log over SQLite. Agent tools are bound to the signed-in user, so the model can never choose who it acts as.',
         features: ['Role-based access enforced in code; prompt-injection attempts to call admin tools are refused.', 'Leave balances, overlap checks and department-aware team-coverage warnings.', 'One-step onboarding that opens IT, payroll and orientation tickets in a single transaction.', 'Same 19 tools exposed over MCP; 36 tests and CI on every push.'],
-        github: 'https://github.com/Kaushik-verse/vidura-agentic-hr-assistant'
+        github: 'https://github.com/Kaushik-verse/vidura-agentic-hr-assistant',
+        demo: 'https://vidura.streamlit.app/'
     },
     'opspilot': { scene: 'ops',
         title: 'OpsPilot — AI On-Call Engineer', badge: 'AIOPS · AGENTS',
