@@ -26,14 +26,15 @@ const projectData = {
         features: ['94% of incidents solved (15/16) across detect, localize and fix tasks.', '69% fewer large-model tokens than a large-model-only baseline (≈4.5k vs 14.6k per incident).', '0 unsafe commands executed: every dangerous command attempt was blocked.', 'Scripted expert solves 16/16 faults on a real kind cluster, validating faults and scorer.', '76 passing tests, CI on GitHub Actions, ₹0 to run.'],
         github: 'https://github.com/Kaushik-verse/opspilot'
     },
-    'real-estate': { scene: 'rag',
-        title: 'Real Estate RAG Assistant', badge: 'RAG SYSTEM',
-        technologies: ['Generative AI', 'NLP', 'LangChain'],
-        description: 'A hybrid Retrieval-Augmented Generation system for intelligent querying of real estate documents.',
-        problem: 'Searching large real estate documents manually is time-consuming and fails to retrieve relevant contextual information.',
-        architecture: 'Implements hybrid retrieval combining semantic vector search with keyword retrieval, embedding pipelines, document chunking, and grounded LLM response generation.',
-        features: ['Hybrid semantic and keyword retrieval.', 'Embedding and document chunking pipeline.', 'Grounded LLM-powered contextual responses.'],
-        github: 'https://github.com/Kaushik-verse/hybrid-rag-assistant'
+    'satyori': { scene: 'rag',
+        title: 'Satyori — Hybrid RAG Lab', badge: 'HYBRID RAG · RETRIEVAL',
+        technologies: ['Python', 'BM25', 'bge-small embeddings', 'SPLADE++', 'Cross-encoder rerank', 'Groq gpt-oss-120b', 'fastembed (ONNX)', 'Streamlit', 'pytest', 'GitHub Actions'],
+        description: 'Satyori (Satya, Sanskrit for truth + Satori, Japanese for insight) is a hybrid RAG assistant for Indian property due diligence and a lab for testing retrieval techniques against each other. Ask about a sale agreement, RERA certificate or title search and it answers with citations, flags documents that contradict each other, and says so when the answer is not there.',
+        problem: 'Property papers mix exact identifiers (case numbers, survey numbers, RERA IDs) with plain-language questions like "can I knock it down?". Keyword search misses paraphrases, embeddings miss IDs, and a brochure can quietly contradict the signed agreement.',
+        architecture: 'Three retrieval channels (BM25, dense embeddings, SPLADE learned sparse) are fused with z-score fusion weighted per query by a router. A cross-encoder rereads the top 20 and its score is blended 50/50 with the fusion score, then MMR adds diversity. A confidence gate abstains on weak evidence; answers are checked sentence by sentence and figure by figure against their sources. Twelve techniques can be compared in a built-in Arena and Benchmark.',
+        features: ['0.744 nDCG@10 on BEIR SciFact, +11% over BM25 and above the published BM25 + reranker (0.688).', '1.00 MRR on a held-out property question set written before any tuning.', 'Found that a web-trained reranker hurts on unfamiliar text (0.742 → 0.687); a 50/50 score blend keeps the gain without the loss.', 'Conflict radar (brochure vs agreement), abstains instead of guessing, three-model council mode.', '49 offline tests, CI on Python 3.11 and 3.13, reproducible benchmarks.'],
+        github: 'https://github.com/Kaushik-verse/satyori-hybrid-rag',
+        demo: 'https://hybrid-rag-assistant-dxrpvnpurkiwixnbsntq3c.streamlit.app/'
     },
     'pos-system': { scene: 'pos',
         title: 'Fullstack POS System', badge: 'FULL STACK',
@@ -588,6 +589,7 @@ function openModal(id) {
         </div>
         <div class="flex flex-col sm:flex-row gap-3 pt-8">
             <a href="${d.github}" target="_blank" class="px-6 py-3.5 text-[9px] font-bold tracking-widest uppercase text-center transition-all duration-200" style="background:var(--orange-glow);color:#000;" onmouseover="this.style.background='#000';this.style.color='var(--orange-glow)';this.style.border='1px solid var(--orange-glow)';" onmouseout="this.style.background='var(--orange-glow)';this.style.color='#000';this.style.border='none';">NAVIGATE CODEBASE ↗</a>
+            ${d.demo ? `<a href="${d.demo}" target="_blank" rel="noopener" class="px-6 py-3.5 border border-neutral-700 text-white text-[9px] font-bold tracking-widest uppercase text-center hover:border-white transition-all duration-200">LIVE DEMO ↗</a>` : ''}
             <button onclick="closeModal()" class="px-6 py-3.5 border border-neutral-700 text-white text-[9px] font-bold tracking-widest uppercase hover:border-white transition-all duration-200">DISMISS</button>
         </div>
     `;
