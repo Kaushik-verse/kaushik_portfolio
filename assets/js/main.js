@@ -1,6 +1,6 @@
 /*!
  * Chunduri Kaushik — Portfolio
- * Copyright (c) 2026 Chunduri Sai Kaushik. All rights reserved.
+ * Copyright (c) Chunduri Sai Kaushik. All rights reserved.
  * Unauthorized copying, reuse or redistribution of this file is prohibited. See LICENSE.
  */
 
@@ -896,9 +896,8 @@ function initPostcard() {
     if (stars) { let h = ''; for (let k = 0; k < 46; k++) { const r = (n) => ((Math.sin(k * 127.1 + n * 311.7) * 43758.5453) % 1 + 1) % 1; h += `<i style="left:${(r(1) * 100).toFixed(1)}%;top:${(r(2) * 100).toFixed(1)}%;--d:${(2 + r(3) * 4).toFixed(1)}s;--dl:${(-r(4) * 5).toFixed(1)}s;${r(5) > .8 ? 'width:3px;height:3px;' : ''}"></i>`; } stars.innerHTML = h; }
 
     const now = new Date();
-    const day = document.getElementById('pm-day'), yr = document.getElementById('pm-year');
+    const day = document.getElementById('pm-day');
     if (day) day.textContent = now.getDate() + ' ' + now.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-    if (yr) yr.textContent = now.getFullYear();
 
     const flip = () => {
         const on = card.classList.toggle('flipped');
